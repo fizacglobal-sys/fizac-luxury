@@ -1,0 +1,9 @@
+ {
+    "redirects": [
+        {
+            "source": "/ng",
+            "destination": "/",
+            "permanent": false
+        }
+    ]
+}
