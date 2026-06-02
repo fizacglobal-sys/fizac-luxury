@@ -4,7 +4,7 @@ import "./globals.css";
 // Establishing international luxury metadata for SEO crawlers scanning Fizac Global
 export const metadata: Metadata = {
     title: "FIZAC GLOBAL | Official Haute Luxury Flagship",
-    description: "Experience artisanal perfumery and bespoke contemporary luxury design collections, engineered for a global audience.",
+    description: "Experience artisanal perfumery and bespoke contemporary luxury design.",
 };
 
 export default function RootLayout({
@@ -13,8 +13,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className="bg-black text-white selection:bg-neutral-800 selection:text-neutral-200">
-            <body className="antialiased min-h-screen bg-black text-white flex flex-col justify-between">
+        <html lang="en" className="bg-black text-white selection:bg-neutral-800 selection:text-white">
+            <body className="antialiased min-h-screen bg-black text-white flex flex-col">
                 {/*
                     This is the core shell of your multi-local engine.
                     The dynamic subdirectories (/ng, /uk, /us, /ae, /int)
@@ -35,3 +35,4 @@ export async function generateStaticParams() {
         { locale: 'int' }
     ];
 }
+
