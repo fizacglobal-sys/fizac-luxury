@@ -1,22 +1,113 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// 1. Core subdirectories active in your app folder
-const supportedLocales = ['ng', 'uk', 'us', 'ae', 'int'];
-const defaultLocale = 'ng';
+// =================================================================
+// 1. MASTER LOCALIZATION MATRIX (Your 70 Global Markets)
+// =================================================================
+export const GLOBAL_MARKET_MATRIX: Record<string, { currency: string; region: string; localeCode: string }> = {
+    // --- EU: EUROPEAN OPERATIONS ---
+    'at': { currency: 'EUR', region: 'Austria', localeCode: 'at' },
+    'be': { currency: 'EUR', region: 'Belgium', localeCode: 'be' },
+    'bg': { currency: 'BGN', region: 'Bulgaria', localeCode: 'bg' },
+    'hr': { currency: 'EUR', region: 'Croatia', localeCode: 'hr' },
+    'cy': { currency: 'EUR', region: 'Cyprus', localeCode: 'cy' },
+    'cz': { currency: 'CZK', region: 'Czech Republic', localeCode: 'cz' },
+    'dk': { currency: 'DKK', region: 'Denmark', localeCode: 'dk' },
+    'fi': { currency: 'EUR', region: 'Finland', localeCode: 'fi' },
+    'fr': { currency: 'EUR', region: 'France', localeCode: 'fr' },
+    'de': { currency: 'EUR', region: 'Germany', localeCode: 'de' },
+    'gr': { currency: 'EUR', region: 'Greece', localeCode: 'gr' },
+    'hu': { currency: 'HUF', region: 'Hungary', localeCode: 'hu' },
+    'ie': { currency: 'EUR', region: 'Ireland', localeCode: 'ie' },
+    'it': { currency: 'EUR', region: 'Italy', localeCode: 'it' },
+    'lu': { currency: 'EUR', region: 'Luxembourg', localeCode: 'lu' },
+    'mc': { currency: 'EUR', region: 'Monaco', localeCode: 'mc' },
+    'nl': { currency: 'EUR', region: 'Netherlands', localeCode: 'nl' },
+    'no': { currency: 'NOK', region: 'Norway', localeCode: 'no' },
+    'pl': { currency: 'PLN', region: 'Poland', localeCode: 'pl' },
+    'pt': { currency: 'EUR', region: 'Portugal', localeCode: 'pt' },
+    'ro': { currency: 'RON', region: 'Romania', localeCode: 'ro' },
+    'sk': { currency: 'EUR', region: 'Slovakia', localeCode: 'sk' },
+    'si': { currency: 'EUR', region: 'Slovenia', localeCode: 'si' },
+    'es': { currency: 'EUR', region: 'Spain', localeCode: 'es' },
+    'se': { currency: 'SEK', region: 'Sweden', localeCode: 'se' },
+    'ch': { currency: 'CHF', region: 'Switzerland', localeCode: 'ch' },
+    'tr': { currency: 'TRY', region: 'Türkiye', localeCode: 'tr' },
+    'uk': { currency: 'GBP', region: 'United Kingdom', localeCode: 'uk' },
 
-// In-memory cache for API rate limiting
+    // --- US: NORTH AMERICA & CARIBBEAN ---
+    'bs': { currency: 'BSD', region: 'Bahamas', localeCode: 'bs' },
+    'ca': { currency: 'CAD', region: 'Canada', localeCode: 'ca' },
+    'mx': { currency: 'MXN', region: 'Mexico', localeCode: 'mx' },
+    'pa': { currency: 'PAB', region: 'Panama', localeCode: 'pa' },
+    'pr': { currency: 'USD', region: 'Puerto Rico', localeCode: 'pr' },
+    'bl': { currency: 'EUR', region: 'Saint Barthélemy', localeCode: 'bl' },
+    'us': { currency: 'USD', region: 'United States', localeCode: 'us' },
+
+    // --- BR: SOUTH AMERICA ---
+    'ar': { currency: 'ARS', region: 'Argentina', localeCode: 'ar' },
+    'br': { currency: 'BRL', region: 'Brazil', localeCode: 'br' },
+    'cl': { currency: 'CLP', region: 'Chile', localeCode: 'cl' },
+    'co': { currency: 'COP', region: 'Colombia', localeCode: 'co' },
+    'uy': { currency: 'UYU', region: 'Uruguay', localeCode: 'uy' },
+
+    // --- CN: EAST ASIA & ASIA-PACIFIC ---
+    'au': { currency: 'AUD', region: 'Australia', localeCode: 'au' },
+    'cn': { currency: 'CNY', region: 'China', localeCode: 'cn' },
+    'hk': { currency: 'HKD', region: 'Hong Kong SAR', localeCode: 'hk' },
+    'id': { currency: 'IDR', region: 'Indonesia', localeCode: 'id' },
+    'jp': { currency: 'JPY', region: 'Japan', localeCode: 'jp' },
+    'mo': { currency: 'MOP', region: 'Macau SAR', localeCode: 'mo' },
+    'my': { currency: 'MYR', region: 'Malaysia', localeCode: 'my' },
+    'nz': { currency: 'NZD', region: 'New Zealand', localeCode: 'nz' },
+    'ph': { currency: 'PHP', region: 'Philippines', localeCode: 'ph' },
+    'sg': { currency: 'SGD', region: 'Singapore', localeCode: 'sg' },
+    'kr': { currency: 'KRW', region: 'South Korea', localeCode: 'kr' },
+    'tw': { currency: 'TWD', region: 'Taiwan', localeCode: 'tw' },
+    'th': { currency: 'THB', region: 'Thailand', localeCode: 'th' },
+    'vn': { currency: 'VND', region: 'Vietnam', localeCode: 'vn' },
+
+    // --- IN: SOUTH & CENTRAL ASIA ---
+    'in': { currency: 'INR', region: 'India', localeCode: 'in' },
+    'kz': { currency: 'KZT', region: 'Kazakhstan', localeCode: 'kz' },
+
+    // --- AE: MIDDLE EAST ---
+    'bh': { currency: 'BHD', region: 'Bahrain', localeCode: 'bh' },
+    'kw': { currency: 'KWD', region: 'Kuwait', localeCode: 'kw' },
+    'qa': { currency: 'QAR', region: 'Qatar', localeCode: 'qa' },
+    'sa': { currency: 'SAR', region: 'Saudi Arabia', localeCode: 'sa' },
+    'ae': { currency: 'AED', region: 'United Arab Emirates', localeCode: 'ae' },
+
+    // --- AFRICA ---
+    'ma': { currency: 'MAD', region: 'Morocco', localeCode: 'ma' },
+    'za': { currency: 'ZAR', region: 'South Africa', localeCode: 'za' },
+    'ng': { currency: 'NGN', region: 'Nigeria', localeCode: 'ng' },
+    'eg': { currency: 'EGP', region: 'Egypt', localeCode: 'eg' },
+    'dz': { currency: 'DZD', region: 'Algeria', localeCode: 'dz' },
+    'sn': { currency: 'XOF', region: 'Senegal', localeCode: 'sn' },
+    'tn': { currency: 'TND', region: 'Tunisia', localeCode: 'tn' },
+    'gh': { currency: 'GHS', region: 'Ghana', localeCode: 'gh' },
+    'cm': { currency: 'XAF', region: 'Cameroon', localeCode: 'cm' },
+    'ci': { currency: 'XOF', region: 'Ivory Coast', localeCode: 'ci' },
+
+    // --- GLOBAL BACKUP ARCHITECTURE ---
+    'int': { currency: 'USD', region: 'International Hub', localeCode: 'int' }
+};
+
+export const SUPPORTED_LOCALES = new Set(Object.keys(GLOBAL_MARKET_MATRIX));
+const DEFAULT_LOCALE = 'ng';
+
 const ipCache = new Map<string, { count: number; expires: number }>();
-const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 60; // 60 requests max per minute per IP
+const RATE_LIMIT_WINDOW_MS = 60000;
+const MAX_REQUESTS_PER_WINDOW = 60;
 
+// =================================================================
+// 2. ROOT HANDLER INTERCEPTOR 
+// =================================================================
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
-    const ip = request.ip || '127.0.0.1';
+    const ip = (request as any).ip || request.headers.get('x-forwarded-for') || '127.0.0.1';
 
-    // ==========================================
-    // SECURITY WALL: Rate Limit sensitive API Routes
-    // ==========================================
     if (pathname.startsWith('/api/checkout')) {
         const now = Date.now();
         const clientData = ipCache.get(ip);
@@ -26,95 +117,38 @@ export function middleware(request: NextRequest) {
         } else {
             clientData.count++;
             if (clientData.count > MAX_REQUESTS_PER_WINDOW) {
-                return new NextResponse(
-                    JSON.stringify({ success: false, message: "Too many checkout attempts. Rate limit exceeded." }),
-                    { status: 429, headers: { 'Content-Type': 'application/json' } }
-                );
+                return new NextResponse('Too many requests', { status: 429 });
             }
         }
     }
 
-    // ==========================================
-    // ROUTING: Exempt core assets and backend API channels
-    // ==========================================
-    if (
-        pathname.startsWith('/api') ||
-        pathname.startsWith('/_next') ||
-        pathname.startsWith('/images') ||
-        pathname.includes('.')
-    ) {
-        // Apply Global Security Response Headers even to API responses
-        const response = NextResponse.next();
-        return applySecurityHeaders(response);
-    }
-
-    // If the browser is already reading an active localized path, let them through
-    const pathnameHasLocale = supportedLocales.some(
-        (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-    );
+    // ✅ AUTOMATED FIX: Extract first folder cleanly and fallback safely to avoid compilation locks
+    const segments = pathname.split('/').filter(Boolean);
+    const firstSegment = segments[0] ? segments[0].toLowerCase() : '';
+    const pathnameHasLocale = SUPPORTED_LOCALES.has(firstSegment);
 
     if (pathnameHasLocale) {
-        const response = NextResponse.next();
-        return applySecurityHeaders(response);
+        const marketData = GLOBAL_MARKET_MATRIX[firstSegment];
+
+        const requestHeaders = new Headers(request.headers);
+        requestHeaders.set('x-market-locale', marketData.localeCode);
+        requestHeaders.set('x-market-currency', marketData.currency);
+        requestHeaders.set('x-market-region', marketData.region);
+
+        return NextResponse.next({
+            request: {
+                headers: requestHeaders,
+            },
+        });
     }
 
-    // 2. Identify the ISO 2-letter country code from the network request
-    const country = request.headers.get('x-vercel-ip-country')?.toLowerCase() || '';
-
-    let targetLocale = defaultLocale;
-
-    // 3. AFRICA REGION MAPPING
-    const africaCountries = ['ng', 'za', 'cm', 'gh', 'ci', 'sn', 'ma', 'eg', 'dz', 'tn', 'cd'];
-
-    // 4. EUROPE REGION MAPPING
-    const europeCountries = [
-        'gb', 'uk', 'fr', 'it', 'de', 'es', 'nl', 'be', 'at', 'ie', 'lu',
-        'ch', 'dk', 'fi', 'se', 'pl', 'cz', 'gr', 'pt', 'hu', 'bg', 'ro', 'si', 'no'
-    ];
-
-    // 5. AMERICAS REGION MAPPING
-    const americasCountries = ['us', 'ca', 'br', 'mx', 'ar', 'co', 'cl', 'pe', 'uy', 'py'];
-
-    // 6. ASIA & MIDDLE EAST REGION MAPPING
-    const asiaCountries = [
-        'ae', 'sa', 'qa', 'kw', 'cn', 'jp', 'kr', 'hk', 'tw', 'sg', 'my', 'th', 'vn', 'id', 'in'
-    ];
-
-    // 7. MULTI-LOCAL ROUTING EVALUATION
-    if (africaCountries.includes(country)) {
-        targetLocale = 'ng';
-    } else if (europeCountries.includes(country)) {
-        targetLocale = 'uk';
-    } else if (americasCountries.includes(country)) {
-        targetLocale = 'us';
-    } else if (asiaCountries.includes(country)) {
-        targetLocale = 'ae';
-    } else {
-        // Australia (au), New Zealand (nz), and the rest of the world drop here
-        targetLocale = 'int';
+    if (pathname === '/') {
+        return NextResponse.redirect(new URL(`/${DEFAULT_LOCALE}`, request.url));
     }
 
-    // 8. Execute redirect to the targeted localized subdirectory
-    request.nextUrl.pathname = `/${targetLocale}${pathname}`;
-    const redirectResponse = NextResponse.redirect(request.nextUrl);
-    return applySecurityHeaders(redirectResponse);
-}
-
-// Helper function to inject global, luxury-tier security profiles into any response stream
-function applySecurityHeaders(response: NextResponse) {
-    response.headers.set('X-Frame-Options', 'DENY');
-    response.headers.set('X-XSS-Protection', '1; mode=block');
-    response.headers.set('X-Content-Type-Options', 'nosniff');
-    response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-    response.headers.set(
-        'Content-Security-Policy',
-        "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.supabase.co;"
-    );
-    return response;
+    return NextResponse.next();
 }
 
 export const config = {
-    // Merged matcher configuration to observe all routing layouts perfectly
-    matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+    matcher: ['/((?!_next/static|_next/image|favicon.ico|images|videos|.*\\..*).*)'],
 };
-

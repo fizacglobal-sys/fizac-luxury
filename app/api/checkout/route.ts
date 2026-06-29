@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/app/supabase';
+import { supabase } from '../../../lib/supabase';
 
 // Explicit whitelist of authorized billing currencies to eliminate injection vectors
 const AUTHORIZED_CURRENCIES = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AED', 'ZAR'];

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/app/supabase';
+import { supabase } from '../../../lib/supabase'; // Goes up 3 steps out of app/api/products back to the root folder
 
 export async function GET(request: Request) {
     try {
