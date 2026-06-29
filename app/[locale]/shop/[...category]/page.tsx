@@ -17,8 +17,6 @@ interface ProductItem {
 export default function CategoryShelfPage() {
   const params = useParams();
   const currentLocale = typeof params?.locale === "string" ? params.locale.toLowerCase() : "ng";
-  
-  // Safely extract the category segments from the dynamic catch-all URL route
   const categorySegments = Array.isArray(params?.category) ? params.category : [];
 
   const [products, setProducts] = useState<ProductItem[]>([]);
@@ -28,8 +26,6 @@ export default function CategoryShelfPage() {
     async function fetchRelationalBoutiqueInventory() {
       try {
         setLoading(true);
-        
-        // Isolate the very last segment clicked from the URL path (e.g., "pb-frag-mens")
         const lastSegment = categorySegments[categorySegments.length - 1];
         const activeSlugFilter = typeof lastSegment === "string" ? lastSegment.toLowerCase() : "";
 
@@ -41,7 +37,6 @@ export default function CategoryShelfPage() {
         // ====================================================================
         // 🌐 AUTOMATED "VIEW ALL" GLOBAL CATCH SYSTEM
         // ====================================================================
-        // If they click 'View All' (haute-parfumerie), skip filtering and pull ALL fragrances at once!
         if (activeSlugFilter === "haute-parfumerie" || activeSlugFilter === "pb-frag-view-all") {
           const { data: allFragrances, error: fragranceError } = await supabase
             .from("products")
@@ -53,7 +48,6 @@ export default function CategoryShelfPage() {
           return;
         }
 
-        // If they click 'View All Clothing' (ready-to-wear), pull ALL fashion items at once!
         if (activeSlugFilter === "ready-to-wear" || activeSlugFilter === "ready-to-wear-view-all") {
           const { data: allFashion, error: fashionError } = await supabase
             .from("products")
@@ -66,7 +60,7 @@ export default function CategoryShelfPage() {
         }
 
         // ====================================================================
-        // 📁 STANDARD FILTER SYSTEM (For deep menus like 'Men's Fragrance')
+        // 📁 STANDARD FILTER SYSTEM (e.g. 'Men's Fragrance')
         // ====================================================================
         const { data: categoryData, error: categoryError } = await supabase
           .from("categories")
@@ -75,7 +69,6 @@ export default function CategoryShelfPage() {
           .single();
 
         if (categoryError) {
-          console.warn("Category slug missed in Supabase archives:", categoryError);
           setProducts([]);
           return;
         }
@@ -100,15 +93,12 @@ export default function CategoryShelfPage() {
     if (categorySegments.length > 0) {
       fetchRelationalBoutiqueInventory();
     }
-  }, [params?.category]);
+  }, [categorySegments]);
 
-  // COMPLETE GLOBAL MULTI-CURRENCY CONVERSION MATRIX ENGINE 
   const getLocalizedPrice = (amountInNaira: number, localeKey: string) => {
     const market = GLOBAL_MARKET_MATRIX[localeKey] || GLOBAL_MARKET_MATRIX["int"];
     let languageFormattingCode = `en-${market.localeCode.toUpperCase()}`;
     if (market.localeCode === "ng") languageFormattingCode = "en-NG";
-    if (market.localeCode === "fr") languageFormattingCode = "fr-FR";
-    if (market.localeCode === "ae") languageFormattingCode = "en-AE";
 
     const exchangeRates: Record<string, number> = {
       NGN: 1, USD: 0.00073, EUR: 0.00070, GBP: 0.00060, BSD: 0.00063, CAD: 0.00085,
@@ -148,6 +138,14 @@ export default function CategoryShelfPage() {
     return displayTitle.toString().replace(/-/g, " ");
   };
 
+  if (loading) {
+    return (
+      <div className="w-full min-h-screen bg-white flex items-center justify-center">
+        <span className="text-[11px] tracking-[0.3em] text-neutral-400 uppercase animate-pulse">Sifting House Archive...</span>
+      </div>
+    );
+  }
+
   return (
     <main className="w-full min-h-screen bg-white text-black font-sans pt-28 pb-32">
       <div className="max-w-[1600px] mx-auto px-6 md:px-12">
@@ -168,22 +166,19 @@ export default function CategoryShelfPage() {
           </div>
         ) : (
           
-          /* DYNAMIC GRID INPUT MATRIX CONTAINER */
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+          /* DYNAMIC RESPONSIVE DISPLAY GRID CONTAINER */
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
             {products.map((item) => {
-              // Convert row base_price to Naira standard right before passing it into your engine
               const calculatedNairaAmount = item.base_price / 0.00073;
 
               return (
                 <Link key={item.id} href={`/${currentLocale}/product/${item.id}`} className="group flex flex-col cursor-pointer select-none">
                   <div className="w-full aspect-[3/4] bg-neutral-50 overflow-hidden mb-4 border border-neutral-100/60">
-                    // 🛠️ FIX THIS SPECIFIC LINE:
                     <img 
-                      src={item.images?.[0] || "/images/img/placeholder.jpg"} 
+                      src={item.images?.[0] || "/images/img/placeholder.jpg"} // ✅ FIXED: Re-added the required [0] array index mapping element
                       alt={item.name} 
                       className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" 
                     />
-
                   </div>
                   <div className="px-1 flex flex-col space-y-1.5">
                     <h3 className="text-[12px] tracking-[0.12em] font-medium text-neutral-800 uppercase line-clamp-1">{item.name}</h3>
