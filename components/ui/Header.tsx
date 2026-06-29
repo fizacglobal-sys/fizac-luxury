@@ -28,7 +28,7 @@ export default function Header({
 
   return (
     <>
-      // Find your header wrapper container and update to this responsive padding layout:
+      
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-neutral-100 transition-all duration-300">
         {/* Changed px-6 to px-4 sm:px-6 to tighten spacing boundaries on compact screens */}
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
