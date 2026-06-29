@@ -28,7 +28,6 @@ export default function Header({
 
   return (
     <>
-      
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-neutral-100 transition-all duration-300">
         {/* Changed px-6 to px-4 sm:px-6 to tighten spacing boundaries on compact screens */}
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
@@ -51,7 +50,7 @@ export default function Header({
             >
               <svg className="w-4 h-4 stroke-[1.25]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-               </svg>
+              </svg>
               <span className="hidden md:inline">SEARCH</span>
             </button>
           </div>
