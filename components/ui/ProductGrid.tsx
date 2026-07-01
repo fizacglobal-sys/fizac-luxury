@@ -157,7 +157,8 @@ export default function ProductGrid({ currentLocale, children }: ProductGridProp
       </div>
 
       {/* THE DYNAMIC DISPLAY GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+      {/* 🛠️ FIXED: Changed grid-cols-1 to grid-cols-2 to force a uniform 2-by-2 mobile grid alignment layout */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-10 sm:gap-y-12">
         {SAMPLE_COLLECTION.map((product) => (
           <Link 
             key={product.id} 
@@ -165,7 +166,7 @@ export default function ProductGrid({ currentLocale, children }: ProductGridProp
             className="group flex flex-col select-none cursor-pointer"
           >
             {/* Portrait Image Canvas Container */}
-            <div className="w-full aspect-[3/4] bg-neutral-50 overflow-hidden relative mb-4">
+            <div className="w-full aspect-[3/4] bg-neutral-50 overflow-hidden relative mb-3 sm:mb-4 border border-neutral-100/60">
               <img
                 src={product.image}
                 alt={product.name}
@@ -175,16 +176,16 @@ export default function ProductGrid({ currentLocale, children }: ProductGridProp
             </div>
 
             {/* Product Meta Specifications Block */}
-            <div className="flex flex-col space-y-1.5 px-1">
-              <span className="text-[9px] tracking-[0.25em] text-neutral-400 font-bold uppercase">
+            <div className="flex flex-col space-y-1 px-0.5 sm:px-1">
+              <span className="text-[8px] sm:text-[9px] tracking-[0.25em] text-neutral-400 font-bold uppercase">
                 {product.category}
               </span>
               
-              <h3 className="text-[12px] tracking-[0.12em] font-medium text-neutral-800 uppercase line-clamp-1 group-hover:text-black transition-colors">
+              <h3 className="text-[11px] sm:text-[12px] tracking-[0.12em] font-medium text-neutral-800 uppercase line-clamp-1 group-hover:text-black transition-colors">
                 {product.name}
               </h3>
               
-              <span className="text-[12px] tracking-[0.1em] font-semibold text-neutral-900 pt-0.5">
+              <span className="text-[11px] sm:text-[12px] tracking-[0.1em] font-semibold text-neutral-900 pt-0.5">
                 {getLocalizedPrice(product.priceAmount, activeLocale)}
               </span>
             </div>
