@@ -10,7 +10,7 @@ interface FizacServicesProps {
 
 export default function FizacServices({ currentLocale = "ng" }: FizacServicesProps) {
   return (
-    <section className="w-full max-w-[1600px] mx-auto px-6 mb-32 bg-white select-none relative z-30">
+    <section className="w-full max-w-[1600px] mx-auto px-6 mb-32 bg-white select-none relative z-30 font-sans">
       
       {/* ================= 1. THE SERVICES INTRO TYPOGRAPHY HEADER BLOCK ================= */}
       <div className="text-center mb-16 flex flex-col items-center">
@@ -23,12 +23,13 @@ export default function FizacServices({ currentLocale = "ng" }: FizacServicesPro
         <div className="w-12 h-[1px] bg-neutral-900 mt-6 opacity-30" />
       </div>
 
-      {/* ================= 2. THE 3-COLUMN CUSTOM SERVICES INTERACTION GRID ================= */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-16">
+      {/* ================= 2. THE RESPONSIVE TOUCH-CAROUSEL SLIDER / GRID CONTROLLER ================= */}
+      {/* 📱 Mobile Fix: Converts into a smooth horizontal touch carousel on mobile viewports, upscales to your exact 3-column desktop layout matrix on large screens */}
+      <div className="flex md:grid md:grid-cols-3 gap-x-8 gap-y-16 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory scrollbar-none pb-6 md:pb-0">
         
         {/* --- COLUMN 1: CLIENT ADVISOR (IMG_6291.JPG) --- */}
-        <div className="flex flex-col items-center text-center group">
-          <div className="w-full aspect-[4/5] bg-neutral-50 overflow-hidden relative mb-5">
+        <div className="w-[85vw] sm:w-[50vw] md:w-full flex-shrink-0 snap-center flex flex-col items-center text-center group">
+          <div className="w-full aspect-[4/5] bg-neutral-50 overflow-hidden relative mb-5 border border-neutral-100/40">
             <img
               src="/images/img/IMG_6291.JPG"
               alt="Book An Appointment"
@@ -50,8 +51,8 @@ export default function FizacServices({ currentLocale = "ng" }: FizacServicesPro
         </div>
 
         {/* --- COLUMN 2: BESPOKE GIFTING (service2.jpg) --- */}
-        <div className="flex flex-col items-center text-center group">
-          <div className="w-full aspect-[4/5] bg-neutral-50 overflow-hidden relative mb-5">
+        <div className="w-[85vw] sm:w-[50vw] md:w-full flex-shrink-0 snap-center flex flex-col items-center text-center group">
+          <div className="w-full aspect-[4/5] bg-neutral-50 overflow-hidden relative mb-5 border border-neutral-100/40">
             <img
               src="/images/img/service2.jpg"
               alt="Bespoke Gifting"
@@ -82,8 +83,8 @@ export default function FizacServices({ currentLocale = "ng" }: FizacServicesPro
         </div>
 
         {/* --- COLUMN 3: PERSONALIZATION (service1.jpg) --- */}
-        <div className="flex flex-col items-center text-center group">
-          <div className="w-full aspect-[4/5] bg-neutral-50 overflow-hidden relative mb-5">
+        <div className="w-[85vw] sm:w-[50vw] md:w-full flex-shrink-0 snap-center flex flex-col items-center text-center group">
+          <div className="w-full aspect-[4/5] bg-neutral-50 overflow-hidden relative mb-5 border border-neutral-100/40">
             <img
               src="/images/img/service1.jpg"
               alt="Personalization"
