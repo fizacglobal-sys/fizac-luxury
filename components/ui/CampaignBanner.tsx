@@ -12,13 +12,11 @@ export default function CampaignBanner({ currentLocale = "ng" }: CampaignBannerP
   const campaignImage = "/images/img/MOBC0728.jpg"; 
   const targetDestination = `/${currentLocale}/shop/new-arrivals`;
 
-  // Inside components/ui/CampaignBanner.tsx
-
-  // Look for the main section tag at the top of your return statement and update its class to:
   return (
-    <section className="w-full mt-20 mb-0 pb-0 bg-white select-none relative z-20">
-      {/* Keep all other internal code inside the component exactly the same */}
-
+    /* 🛠️ FIXED FULL SCREEN RESTRUCTURING COVER CANVAS CONTAINER */
+    /* w-screen breaks out of any margin parameters to guarantee the visual layer hits the edges of the phone screen */
+    <section className="w-screen relative left-1/2 right-1/2 -ml-[50vw] mt-20 mb-0 pb-0 bg-white select-none z-20 overflow-hidden">
+      
       {/* ================= 1. THE PICTURE COMPONENT CONTAINER (FULL SCREEN IMAGE) ================= */}
       <Link 
         href={targetDestination} 
@@ -63,7 +61,7 @@ export default function CampaignBanner({ currentLocale = "ng" }: CampaignBannerP
         <div className="pt-2">
           <Link 
             href={targetDestination} 
-            className="inline-block bg-neutral-950 text-white hover:bg-neutral-800 text-[11px] tracking-[0.3em] px-12 py-4 transition-all duration-500 uppercase font-medium"
+            className="inline-block bg-neutral-950 text-white hover:bg-neutral-800 text-[11px] tracking-[0.3em] px-12 py-4 transition-all duration-500 uppercase font-medium shadow-sm"
           >
             Discover More
           </Link>
