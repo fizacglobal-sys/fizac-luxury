@@ -6,11 +6,12 @@ import Link from "next/link";
 import { GLOBAL_MARKET_MATRIX } from "../../../../middleware";
 import { supabase } from "../../../../lib/supabase"; 
 
+// 1. SYNCHRONIZED SPECIFICATIONS TYPE MATRIX
 interface ProductItem {
   id: string;
   name: string;
   slug: string;
-  base_price: number;
+  base_price: number; 
   images: string[];
 }
 
@@ -26,7 +27,6 @@ export default function CategoryShelfPage() {
     async function fetchRelationalBoutiqueInventory() {
       try {
         setLoading(true);
-        
         const lastSegment = categorySegments[categorySegments.length - 1];
         const activeSlugFilter = typeof lastSegment === "string" ? lastSegment.toLowerCase() : "";
 
@@ -38,7 +38,6 @@ export default function CategoryShelfPage() {
         // ====================================================================
         // 🌐 GLOBAL "VIEW ALL" CONTROLLER CATCH ENGINE
         // ====================================================================
-        // If clicking 'View All' under perfumes, fetch all categories in the fragrance pillar first, then extract their items
         if (activeSlugFilter === "haute-parfumerie" || activeSlugFilter === "pb-frag-view-all") {
           const { data: catRows, error: catErr } = await supabase
             .from("categories")
@@ -51,8 +50,8 @@ export default function CategoryShelfPage() {
             const catIds = catRows.map(c => c.id);
             const { data: allFragrances, error: fragranceError } = await supabase
               .from("products")
-              .select("*")
-              .in("category_id", catIds); // Pulls everything under the broad fragrance umbrella safely!
+              .select("id, name, slug, base_price, images") // Explicit column selection matching your database schema
+              .in("category_id", catIds); 
 
             if (fragranceError) throw fragranceError;
             setProducts(allFragrances || []);
@@ -62,7 +61,6 @@ export default function CategoryShelfPage() {
           return;
         }
 
-        // If clicking 'View All Clothing', fetch all categories in the fashion pillar first, then extract their items
         if (activeSlugFilter === "ready-to-wear" || activeSlugFilter === "ready-to-wear-view-all") {
           const { data: catRows, error: catErr } = await supabase
             .from("categories")
@@ -75,7 +73,7 @@ export default function CategoryShelfPage() {
             const catIds = catRows.map(c => c.id);
             const { data: allFashion, error: fashionError } = await supabase
               .from("products")
-              .select("*")
+              .select("id, name, slug, base_price, images")
               .in("category_id", catIds);
 
             if (fashionError) throw fashionError;
@@ -104,7 +102,7 @@ export default function CategoryShelfPage() {
         if (categoryData?.id) {
           const { data: productRecords, error: productError } = await supabase
             .from("products")
-            .select("*")
+            .select("id, name, slug, base_price, images")
             .eq("category_id", categoryData.id);
 
           if (productError) throw productError;
@@ -123,10 +121,13 @@ export default function CategoryShelfPage() {
     }
   }, [categorySegments]);
 
+  // COMPLETE GLOBAL MULTI-CURRENCY CONVERSION MATRIX ENGINE 
   const getLocalizedPrice = (amountInNaira: number, localeKey: string) => {
     const market = GLOBAL_MARKET_MATRIX[localeKey] || GLOBAL_MARKET_MATRIX["int"];
     let languageFormattingCode = `en-${market.localeCode.toUpperCase()}`;
     if (market.localeCode === "ng") languageFormattingCode = "en-NG";
+    if (market.localeCode === "fr") languageFormattingCode = "fr-FR";
+    if (market.localeCode === "ae") languageFormattingCode = "en-AE";
 
     const exchangeRates: Record<string, number> = {
       NGN: 1, USD: 0.00073, EUR: 0.00070, GBP: 0.00060, BSD: 0.00063, CAD: 0.00085,
@@ -194,16 +195,17 @@ export default function CategoryShelfPage() {
           </div>
         ) : (
           
-          /* DYNAMIC RESPONSIVE DISPLAY GRID CONTAINER */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+          /* DYNAMIC DISPLAY GRID CONTAINER WITH LIVE DATA SYNCHRONIZATION */
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
             {products.map((item) => {
+              // Convert row base_price to Naira standard right before passing it into your engine
               const calculatedNairaAmount = item.base_price / 0.00073;
 
               return (
                 <Link key={item.id} href={`/${currentLocale}/product/${item.id}`} className="group flex flex-col cursor-pointer select-none">
                   <div className="w-full aspect-[3/4] bg-neutral-50 overflow-hidden mb-4 border border-neutral-100/60">
                     <img 
-                      src={item.images?.[0] || "/images/img/placeholder.jpg"} // ✅ FIXED: Re-added the required [0] array index mapping element
+                      src={item.images?.[0] || "/images/img/placeholder.jpg"} 
                       alt={item.name} 
                       className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" 
                     />
