@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation"; // 👈 ENSURE THIS LINE IS AT THE TOP OF YOUR FILE
+
 
 interface MenuDrawerProps {
   isOpen: boolean;
@@ -620,6 +622,10 @@ const SECONDARY_LINKS_LIST = [
 export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
   const [activePillar, setActivePillar] = useState<string>("new-arrival");
 
+  // 🛠️ ADDED: Fetches your dynamic active route subdirectory parameters
+  const params = useParams();
+  const currentLocale = typeof params?.locale === "string" ? params.locale.toLowerCase() : "ng";
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -641,8 +647,8 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
       <button
         key={tab.id}
         onClick={() => setActivePillar(tab.id)}
-        className={`text-[11px] tracking-[0.2em] text-left font-light whitespace-nowrap transition-all duration-200 hover:text-black ${
-          isSelected ? "text-black font-semibold md:translate-x-2" : "text-neutral-400"
+        className={`text-[11px] tracking-[0.2em] text-left font-normal whitespace-nowrap transition-all duration-200 hover:text-black ${
+          isSelected ? "text-black font-medium md:translate-x-2" : "text-neutral-400"
         }`}
       >
         {tab.label}
@@ -650,14 +656,18 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
     );
   });
 
+
+  // ====================================================================
+  // 🎨 GROTESQUE SANS-SERIF CORE STYLING MATRIX RENDERING LOOPS
+  // ====================================================================
   const renderedSecondaryLinks = SECONDARY_LINKS_LIST.map((link) => {
     if (link.href) {
       return (
         <Link
           key={link.id}
-          href={link.href}
+          href={`/${currentLocale}${link.href}`}
           onClick={onClose}
-          className="text-[10px] tracking-[0.25em] font-light text-neutral-400 hover:text-black transition-colors block uppercase"
+          className="text-[11px] tracking-[0.22em] font-normal text-neutral-400 hover:text-black transition-colors block uppercase"
         >
           {link.label}
         </Link>
@@ -669,8 +679,8 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
       <button
         key={link.id}
         onClick={() => setActivePillar(link.id)}
-        className={`text-[10px] tracking-[0.25em] text-left font-light whitespace-nowrap transition-all duration-200 hover:text-black uppercase ${
-          isSelected ? "text-black font-semibold" : "text-neutral-400"
+        className={`text-[11px] tracking-[0.22em] text-left font-normal whitespace-nowrap transition-all duration-200 hover:text-black uppercase cursor-pointer ${
+          isSelected ? "text-black font-medium" : "text-neutral-400"
         }`}
       >
         {link.label}
@@ -678,38 +688,16 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
     );
   });
 
-  const renderedSections = currentPillarData.sections.map((subCat) => {
-    const renderedLeaves = subCat.subSubCategories.map((leaf) => (
-      <li key={leaf.slug}>
-        <Link 
-          href={`/shop/${leaf.slug}`} 
-          onClick={onClose}
-          className="text-[11px] tracking-[0.15em] font-light text-neutral-500 hover:text-black hover:font-normal transition-all block"
-        >
-          {leaf.name}
-        </Link>
-      </li>
-    ));
-
-    return (
-      <div key={subCat.slug} className="flex flex-col space-y-4">
-        <span className="text-[11px] tracking-[0.2em] font-semibold text-neutral-900 block">
-          {subCat.subCategoryName}
-        </span>
-        <ul className="flex flex-col space-y-3 border-l border-neutral-100 pl-3">
-          {renderedLeaves}
-        </ul>
-      </div>
-    );
-  });
-
-    return (
-    <div className="fixed inset-0 z-50 flex">
+  return (
+    <div 
+      style={{ fontFamily: "'Helvetica Neue', Arial, 'Helvetica', sans-serif" }} 
+      className="fixed inset-0 z-50 flex"
+    >
       {/* Background dimmer mask overlay */}
       <div className="absolute inset-0 bg-black/30 backdrop-blur-xs" onClick={onClose} />
 
       {/* Main Slide-out Panel Frame Box */}
-      <div className="relative w-full max-w-[900px] bg-white h-screen shadow-2xl flex flex-col md:flex-row transition-transform duration-300 text-black overflow-hidden font-sans">
+      <div className="relative w-full max-w-[900px] bg-white h-screen shadow-2xl flex flex-col md:flex-row transition-transform duration-300 text-black overflow-hidden">
         
         {/* LEFT COMPARTMENT: Side Navigation Controls Column */}
         <div className="w-full md:w-[320px] bg-neutral-50 border-b md:border-b-0 md:border-r border-neutral-200 p-8 pt-24 flex flex-col justify-between overflow-y-auto scrollbar-none h-full">
@@ -718,15 +706,14 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
           <div className="flex flex-row md:flex-col space-x-5 md:space-x-0 md:space-y-7 overflow-x-auto md:overflow-x-visible scrollbar-none pb-6 md:pb-0">
             {TABS_LIST.map((tab) => {
               const isSelected = activePillar === tab.id;
-              // Check if it has active section elements to determine if it should render a ">" sign
               const hasSubMenus = (NAVIGATION_TREE[tab.id]?.sections?.length ?? 0) > 0;
 
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActivePillar(tab.id)}
-                  className={`text-[13px] tracking-[0.22em] text-left uppercase font-bold flex justify-between items-center w-full transition-all duration-200 hover:text-black group ${
-                    isSelected ? "text-black md:translate-x-1" : "text-neutral-500"
+                  className={`text-[12px] tracking-[0.2em] text-left uppercase flex justify-between items-center w-full transition-all duration-200 hover:text-black group cursor-pointer ${
+                    isSelected ? "text-black font-medium md:translate-x-1" : "text-neutral-500 font-normal"
                   }`}
                 >
                   <span>{tab.label}</span>
@@ -742,7 +729,7 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
             })}
           </div>
 
-          {/* Section B: Secondary Brand Utility Links Block with Clear Generous Top Margin Spacing */}
+          {/* Section B: Secondary Brand Utility Links Block */}
           <div className="mt-14 pt-8 border-t border-neutral-200 flex flex-col space-y-6 hidden md:flex">
             {SECONDARY_LINKS_LIST.map((link) => {
               const isSelected = activePillar === link.id;
@@ -751,9 +738,9 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
                 return (
                   <Link
                     key={link.id}
-                    href={link.href}
+                    href={`/${currentLocale}${link.href}`}
                     onClick={onClose}
-                    className="text-[11px] tracking-[0.25em] font-bold text-neutral-500 hover:text-black transition-colors block uppercase"
+                    className="text-[11px] tracking-[0.25em] font-normal text-neutral-500 hover:text-black transition-colors block uppercase"
                   >
                     {link.label}
                   </Link>
@@ -766,8 +753,8 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
                 <button
                   key={link.id}
                   onClick={() => setActivePillar(link.id)}
-                  className={`text-[11px] tracking-[0.25em] text-left uppercase font-bold flex justify-between items-center w-full transition-all duration-200 hover:text-black group ${
-                    isSelected ? "text-black" : "text-neutral-500"
+                  className={`text-[11px] tracking-[0.25em] text-left uppercase flex justify-between items-center w-full transition-all duration-200 hover:text-black group cursor-pointer ${
+                    isSelected ? "text-black font-medium" : "text-neutral-500 font-normal"
                   }`}
                 >
                   <span>{link.label}</span>
@@ -789,9 +776,9 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
               return (
                 <Link
                   key={link.id}
-                  href={link.href}
+                  href={`/${currentLocale}${link.href}`}
                   onClick={onClose}
-                  className="text-[11px] tracking-[0.25em] font-bold text-neutral-500 hover:text-black transition-colors block uppercase"
+                  className="text-[11px] tracking-[0.25em] font-normal text-neutral-500 hover:text-black transition-colors block uppercase"
                 >
                   {link.label}
                 </Link>
@@ -805,8 +792,8 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
                   const el = document.getElementById("right-compartment-view");
                   if (el) el.scrollIntoView({ behavior: "smooth" });
                 }}
-                className={`text-[11px] tracking-[0.25em] text-left uppercase font-bold w-full ${
-                  activePillar === link.id ? "text-black" : "text-neutral-500"
+                className={`text-[11px] tracking-[0.25em] text-left uppercase cursor-pointer ${
+                  activePillar === link.id ? "text-black font-medium" : "text-neutral-500 font-normal"
                 }`}
               >
                 {link.label}
@@ -818,7 +805,7 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
         {/* RIGHT COMPARTMENT PANEL: Dynamic Grid Rendering Section */}
         <div id="right-compartment-view" className="flex-1 p-8 md:p-14 pt-24 overflow-y-auto bg-white relative">
           {/* Main Close Interface Button */}
-          <button onClick={onClose} className="absolute top-8 right-8 text-neutral-400 hover:text-black transition-colors p-1">
+          <button onClick={onClose} className="absolute top-8 right-8 text-neutral-400 hover:text-black transition-colors p-1 cursor-pointer">
             <svg className="w-6 h-6 stroke-[1.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -831,12 +818,17 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-12">
             {currentPillarData.sections.map((subCat) => (
               <div key={subCat.slug} className="flex flex-col space-y-5">
-                {/* Level 2 Subcategory Title Block: Large Bold Header with Interactive Caret Marker */}
+                
+                {/* Level 2 Subcategory Title Block: Clickable Localized Heading */}
                 <div className="flex justify-between items-center border-b border-neutral-100 pb-2">
-                  <span className="text-[13px] tracking-[0.2em] font-extrabold text-neutral-900 uppercase">
+                  <Link
+                    href={`/${currentLocale}/shop/${subCat.slug}`}
+                    onClick={onClose}
+                    className="text-[12px] tracking-[0.2em] font-medium text-neutral-900 uppercase hover:text-neutral-500 transition-colors"
+                  >
                     {subCat.subCategoryName}
-                  </span>
-                  <span className="text-[10px] font-light text-neutral-400 select-none">
+                  </Link>
+                  <span className="text-[10px] font-normal text-neutral-400 select-none">
                     &gt;
                   </span>
                 </div>
@@ -846,9 +838,9 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
                   {subCat.subSubCategories.map((leaf) => (
                     <li key={leaf.slug}>
                       <Link 
-                        href={`/shop/${leaf.slug}`} 
+                        href={`/${currentLocale}/shop/${leaf.slug}`} 
                         onClick={onClose}
-                        className="text-[12px] tracking-[0.18em] font-normal text-neutral-600 hover:text-black hover:font-bold transition-all block uppercase"
+                        className="text-[11px] tracking-[0.18em] font-normal text-neutral-600 hover:text-black hover:font-medium transition-all block uppercase"
                       >
                         {leaf.name}
                       </Link>
