@@ -700,7 +700,8 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
       <div className="relative w-full max-w-[900px] bg-white h-screen shadow-2xl flex flex-col md:flex-row transition-transform duration-300 text-black overflow-hidden">
         
         {/* LEFT COMPARTMENT: Side Navigation Controls Column */}
-        <div className="w-full md:w-[320px] bg-neutral-50 border-b md:border-b-0 md:border-r border-neutral-200 p-8 pt-24 flex flex-col justify-between overflow-y-auto scrollbar-none h-full">
+        {/* 📱 Mobile Optimization: Changed h-full to h-auto md:h-full so this navigation bar scales gracefully onto small phone viewports */}
+        <div className="w-full md:w-[320px] bg-neutral-50 border-b md:border-b-0 md:border-r border-neutral-200 p-8 pt-24 flex flex-col justify-between overflow-y-auto scrollbar-none h-auto md:h-full">
           
           {/* Section A: Core Luxury Products Nav List */}
           <div className="flex flex-row md:flex-col space-x-5 md:space-x-0 md:space-y-7 overflow-x-auto md:overflow-x-visible scrollbar-none pb-6 md:pb-0">
@@ -712,7 +713,7 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
                 <button
                   key={tab.id}
                   onClick={() => setActivePillar(tab.id)}
-                  className={`text-[12px] tracking-[0.2em] text-left uppercase flex justify-between items-center w-full transition-all duration-200 hover:text-black group cursor-pointer ${
+                  className={`text-[12px] tracking-[0.2em] text-left uppercase flex justify-between items-center w-auto md:w-full transition-all duration-200 hover:text-black group cursor-pointer whitespace-nowrap md:whitespace-normal ${
                     isSelected ? "text-black font-medium md:translate-x-1" : "text-neutral-500 font-normal"
                   }`}
                 >
@@ -803,21 +804,23 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
         </div>
 
         {/* RIGHT COMPARTMENT PANEL: Dynamic Grid Rendering Section */}
-        <div id="right-compartment-view" className="flex-1 p-8 md:p-14 pt-24 overflow-y-auto bg-white relative">
+        {/* 📱 Mobile Optimization: Changed flex-1 to md:flex-1 and added max-h-[50vh] md:max-h-screen to ensure the contents scroll beautifully inside mobile viewports instead of breaking your outer drawer container elements */}
+        <div id="right-compartment-view" className="w-full md:flex-1 p-8 md:p-14 pt-16 md:pt-24 overflow-y-auto bg-white relative max-h-[50vh] md:max-h-screen">
           {/* Main Close Interface Button */}
-          <button onClick={onClose} className="absolute top-8 right-8 text-neutral-400 hover:text-black transition-colors p-1 cursor-pointer">
+          <button onClick={onClose} className="absolute top-6 md:top-8 right-6 md:right-8 text-neutral-400 hover:text-black transition-colors p-1 cursor-pointer">
             <svg className="w-6 h-6 stroke-[1.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
 
-          <h2 className="text-[11px] tracking-[0.3em] font-medium text-neutral-400 mb-10 uppercase border-b border-neutral-100 pb-3">
+          <h2 className="text-[11px] tracking-[0.3em] font-medium text-neutral-400 mb-8 md:mb-10 uppercase border-b border-neutral-100 pb-3">
             {currentPillarData.title}
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-12">
+          {/* 📱 Mobile Optimization: Kept your grid-cols-1 sm:grid-cols-2 matrix layout perfectly intact */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10 md:gap-y-12">
             {currentPillarData.sections.map((subCat) => (
-              <div key={subCat.slug} className="flex flex-col space-y-5">
+              <div key={subCat.slug} className="flex flex-col space-y-4 md:space-y-5">
                 
                 {/* Level 2 Subcategory Title Block: Clickable Localized Heading */}
                 <div className="flex justify-between items-center border-b border-neutral-100 pb-2">
