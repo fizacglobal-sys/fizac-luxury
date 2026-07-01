@@ -26,6 +26,7 @@ export default function CategoryShelfPage() {
     async function fetchRelationalBoutiqueInventory() {
       try {
         setLoading(true);
+        
         const lastSegment = categorySegments[categorySegments.length - 1];
         const activeSlugFilter = typeof lastSegment === "string" ? lastSegment.toLowerCase() : "";
 
@@ -35,32 +36,58 @@ export default function CategoryShelfPage() {
         }
 
         // ====================================================================
-        // 🌐 AUTOMATED "VIEW ALL" GLOBAL CATCH SYSTEM
+        // 🌐 GLOBAL "VIEW ALL" CONTROLLER CATCH ENGINE
         // ====================================================================
+        // If clicking 'View All' under perfumes, fetch all categories in the fragrance pillar first, then extract their items
         if (activeSlugFilter === "haute-parfumerie" || activeSlugFilter === "pb-frag-view-all") {
-          const { data: allFragrances, error: fragranceError } = await supabase
-            .from("products")
-            .select("*, categories!inner(*)")
-            .eq("categories.brand_pillar", "fragrance"); 
+          const { data: catRows, error: catErr } = await supabase
+            .from("categories")
+            .select("id")
+            .eq("brand_pillar", "fragrance");
 
-          if (fragranceError) throw fragranceError;
-          setProducts(allFragrances || []);
+          if (catErr) throw catErr;
+
+          if (catRows && catRows.length > 0) {
+            const catIds = catRows.map(c => c.id);
+            const { data: allFragrances, error: fragranceError } = await supabase
+              .from("products")
+              .select("*")
+              .in("category_id", catIds); // Pulls everything under the broad fragrance umbrella safely!
+
+            if (fragranceError) throw fragranceError;
+            setProducts(allFragrances || []);
+          } else {
+            setProducts([]);
+          }
           return;
         }
 
+        // If clicking 'View All Clothing', fetch all categories in the fashion pillar first, then extract their items
         if (activeSlugFilter === "ready-to-wear" || activeSlugFilter === "ready-to-wear-view-all") {
-          const { data: allFashion, error: fashionError } = await supabase
-            .from("products")
-            .select("*, categories!inner(*)")
-            .eq("categories.brand_pillar", "fashion"); 
+          const { data: catRows, error: catErr } = await supabase
+            .from("categories")
+            .select("id")
+            .eq("brand_pillar", "fashion");
 
-          if (fashionError) throw fashionError;
-          setProducts(allFashion || []);
+          if (catErr) throw catErr;
+
+          if (catRows && catRows.length > 0) {
+            const catIds = catRows.map(c => c.id);
+            const { data: allFashion, error: fashionError } = await supabase
+              .from("products")
+              .select("*")
+              .in("category_id", catIds);
+
+            if (fashionError) throw fashionError;
+            setProducts(allFashion || []);
+          } else {
+            setProducts([]);
+          }
           return;
         }
 
         // ====================================================================
-        // 📁 STANDARD FILTER SYSTEM (e.g. 'Men's Fragrance')
+        // 📁 STANDARD SUBCATEGORY FILTER (e.g. 'Men's Fragrance')
         // ====================================================================
         const { data: categoryData, error: categoryError } = await supabase
           .from("categories")
@@ -69,6 +96,7 @@ export default function CategoryShelfPage() {
           .single();
 
         if (categoryError) {
+          console.warn("Category slug missed in Supabase archives:", categoryError);
           setProducts([]);
           return;
         }
