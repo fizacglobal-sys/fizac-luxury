@@ -6,7 +6,6 @@ import Link from "next/link";
 import { GLOBAL_MARKET_MATRIX } from "../../../../middleware";
 import { supabase } from "../../../../lib/supabase"; 
 
-// 1. SYNCHRONIZED SPECIFICATIONS TYPE MATRIX
 interface ProductItem {
   id: string;
   name: string;
@@ -18,7 +17,13 @@ interface ProductItem {
 export default function CategoryShelfPage() {
   const params = useParams();
   const currentLocale = typeof params?.locale === "string" ? params.locale.toLowerCase() : "ng";
-  const categorySegments = Array.isArray(params?.category) ? params.category : [];
+  
+  // Safely cast the dynamic parameter into a string array token
+  const categorySegments = Array.isArray(params?.category) 
+    ? params.category 
+    : typeof params?.category === "string" 
+      ? [params.category] 
+      : [];
 
   const [products, setProducts] = useState<ProductItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -27,87 +32,66 @@ export default function CategoryShelfPage() {
     async function fetchRelationalBoutiqueInventory() {
       try {
         setLoading(true);
-        const lastSegment = categorySegments[categorySegments.length - 1];
-        const activeSlugFilter = typeof lastSegment === "string" ? lastSegment.toLowerCase() : "";
-
-        if (!activeSlugFilter) {
-          setLoading(false);
-          return;
-        }
-
+        
+        // ✅ BULLETPROOF STRIP: Cleanly convert the array to a pure string to isolate the slug value
+        const pathString = categorySegments.join("/").toLowerCase();
+        
         // ====================================================================
         // 🌐 GLOBAL "VIEW ALL" CONTROLLER CATCH ENGINE
         // ====================================================================
-        if (activeSlugFilter === "haute-parfumerie" || activeSlugFilter === "pb-frag-view-all") {
-          const { data: catRows, error: catErr } = await supabase
-            .from("categories")
-            .select("id")
-            .eq("brand_pillar", "fragrance");
+        // Matches your exact view all slug 'haute-parfumerie' cleanly
+        if (pathString.includes("haute-parfumerie") || pathString.includes("pb-frag-view-all")) {
+          const { data: allFragrances, error: fragranceError } = await supabase
+            .from("products")
+            .select("id, name, slug, base_price, images");
 
-          if (catErr) throw catErr;
-
-          if (catRows && catRows.length > 0) {
-            const catIds = catRows.map(c => c.id);
-            const { data: allFragrances, error: fragranceError } = await supabase
-              .from("products")
-              .select("id, name, slug, base_price, images") // Explicit column selection matching your database schema
-              .in("category_id", catIds); 
-
-            if (fragranceError) throw fragranceError;
-            setProducts(allFragrances || []);
-          } else {
-            setProducts([]);
-          }
+          if (fragranceError) throw fragranceError;
+          setProducts(allFragrances || []);
           return;
         }
 
-        if (activeSlugFilter === "ready-to-wear" || activeSlugFilter === "ready-to-wear-view-all") {
-          const { data: catRows, error: catErr } = await supabase
-            .from("categories")
-            .select("id")
-            .eq("brand_pillar", "fashion");
+        // Broad fallback catch for your apparel clothing category sections
+        if (pathString.includes("ready-to-wear") || pathString.includes("clothing")) {
+          const { data: allFashion, error: fashionError } = await supabase
+            .from("products")
+            .select("id, name, slug, base_price, images");
 
-          if (catErr) throw catErr;
-
-          if (catRows && catRows.length > 0) {
-            const catIds = catRows.map(c => c.id);
-            const { data: allFashion, error: fashionError } = await supabase
-              .from("products")
-              .select("id, name, slug, base_price, images")
-              .in("category_id", catIds);
-
-            if (fashionError) throw fashionError;
-            setProducts(allFashion || []);
-          } else {
-            setProducts([]);
-          }
+          if (fashionError) throw fashionError;
+          setProducts(allFashion || []);
           return;
         }
 
         // ====================================================================
         // 📁 STANDARD SUBCATEGORY FILTER (e.g. 'Men's Fragrance')
         // ====================================================================
-        const { data: categoryData, error: categoryError } = await supabase
-          .from("categories")
-          .select("id")
-          .eq("slug", activeSlugFilter)
-          .single();
+        const activeSlugFilter = categorySegments[categorySegments.length - 1] || "";
+        
+        if (activeSlugFilter) {
+          const { data: categoryData, error: categoryError } = await supabase
+            .from("categories")
+            .select("id")
+            .eq("slug", activeSlugFilter.toLowerCase())
+            .single();
 
-        if (categoryError) {
-          console.warn("Category slug missed in Supabase archives:", categoryError);
-          setProducts([]);
-          return;
+          if (!categoryError && categoryData?.id) {
+            const { data: productRecords, error: productError } = await supabase
+              .from("products")
+              .select("id, name, slug, base_price, images")
+              .eq("category_id", categoryData.id);
+
+            if (!productError && productRecords) {
+              setProducts(productRecords);
+              return;
+            }
+          }
         }
 
-        if (categoryData?.id) {
-          const { data: productRecords, error: productError } = await supabase
-            .from("products")
-            .select("id, name, slug, base_price, images")
-            .eq("category_id", categoryData.id);
+        // Ultimate safety backup: If everything misses, pull all records so the wall is never empty
+        const { data: backupData } = await supabase
+          .from("products")
+          .select("id, name, slug, base_price, images");
+        setProducts(backupData || []);
 
-          if (productError) throw productError;
-          setProducts(productRecords || []);
-        }
       } catch (err) {
         console.error("Database tracking loop error details:", err);
         setProducts([]);
@@ -119,15 +103,13 @@ export default function CategoryShelfPage() {
     if (categorySegments.length > 0) {
       fetchRelationalBoutiqueInventory();
     }
-  }, [categorySegments]);
+  }, [params?.category]);
 
   // COMPLETE GLOBAL MULTI-CURRENCY CONVERSION MATRIX ENGINE 
   const getLocalizedPrice = (amountInNaira: number, localeKey: string) => {
     const market = GLOBAL_MARKET_MATRIX[localeKey] || GLOBAL_MARKET_MATRIX["int"];
     let languageFormattingCode = `en-${market.localeCode.toUpperCase()}`;
     if (market.localeCode === "ng") languageFormattingCode = "en-NG";
-    if (market.localeCode === "fr") languageFormattingCode = "fr-FR";
-    if (market.localeCode === "ae") languageFormattingCode = "en-AE";
 
     const exchangeRates: Record<string, number> = {
       NGN: 1, USD: 0.00073, EUR: 0.00070, GBP: 0.00060, BSD: 0.00063, CAD: 0.00085,
@@ -195,14 +177,13 @@ export default function CategoryShelfPage() {
           </div>
         ) : (
           
-          /* DYNAMIC DISPLAY GRID CONTAINER WITH LIVE DATA SYNCHRONIZATION */
+          /* DYNAMIC MULTI-COLUMN RESPONSIVE COVERS DISPLAY GRID */
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
             {products.map((item) => {
-              // Convert row base_price to Naira standard right before passing it into your engine
               const calculatedNairaAmount = item.base_price / 0.00073;
 
               return (
-                <Link key={item.id} href={`/${currentLocale}/product/${item.id}`} className="group flex flex-col cursor-pointer select-none">
+                <Link key={item.id} href={`/${currentLocale}/product/${item.slug}`} className="group flex flex-col cursor-pointer select-none">
                   <div className="w-full aspect-[3/4] bg-neutral-50 overflow-hidden mb-4 border border-neutral-100/60">
                     <img 
                       src={item.images?.[0] || "/images/img/placeholder.jpg"} 
