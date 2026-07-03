@@ -11,10 +11,10 @@ import { GLOBAL_MARKET_MATRIX } from "../../../../middleware";
 // ====================================================================
 const MASTER_FRONTEND_COLLECTION = [
   {
-    id: "10000000-0000-0000-0000-000000000001", // Links seamlessly with your shelf page layout matrix
+    id: "10000000-0000-0000-0000-000000000001", 
     name: "COLONIA DELUXE",
     slug: "colonia-deluxe",
-    base_price: 120000, // True 120,000 NGN baseline value
+    base_price: 120000, 
     images: ["/images/img/Colonia Deluxe.jpg", "/images/img/perfume3.jpg"],
     product_description: "Designed for the modern connoisseur, COLONIA DELUXE by Fizac Fragrance redefines the classic, sun-drenched freshness of traditional colognes by infusing it with an unapologetic, contemporary depth. It captures the essence of refined luxury—opening with an explosive, invigorating brightness before settling into a rich, magnetic trail that commands attention. Crafted with high-performance projection in mind, this is not a scent that fades into the background, tailored for individuals who demand both timeless elegance and unforgettable presence.",
     product_details: [
@@ -28,7 +28,7 @@ const MASTER_FRONTEND_COLLECTION = [
       "Ingredients: Alcohol Denat, Parfum, Pogostemon Cablin Oil, Citrus Aurantium Bergamia Peel Oil, Citrus Limon Peel Oil, Benzyl Benzoate, Coumarin, Limonene, Vanillin, Linalyl Acetate, Linalool, Beta-Caryophyllene, Pinene, Pelargonium Graveolens Flower Oil, Citral, Citronellol, Terpineol, Rose Ketones, Eugenol, Geranyl Acetate, Geraniol, Terpinolene, Santalol, Camphor, Alpha-Terpinene, Rose Flower Oil/Extract, Benzyl Alcohol, Carvone, Farnesol"
     ],
     variants: [
-      { id: "v1", variant_value: "100ml", price_modifier: 0 } // Crystal Gold base selection sizing
+      { id: "v1", variant_value: "100ml", price_modifier: 0 }
     ]
   }
 ];
@@ -66,8 +66,6 @@ export default function ProductDetailPage() {
     async function loadLocalProductData() {
       try {
         setLoading(true);
-
-        // Scan our high-fashion client portfolio list to locate the correct item match safely
         const matchedItem = MASTER_FRONTEND_COLLECTION.find(
           (item) => item.id === productId || item.slug === productId
         );
@@ -96,7 +94,6 @@ export default function ProductDetailPage() {
     if (productId) loadLocalProductData();
   }, [productId]);
 
-  // COMPLETE GLOBAL MULTI-CURRENCY CONVERSION MATRIX ENGINE 
   const getLocalizedPrice = (amountInNaira: number, localeKey: string) => {
     const market = GLOBAL_MARKET_MATRIX[localeKey] || GLOBAL_MARKET_MATRIX["int"];
     let languageFormattingCode = `en-${market.localeCode.toUpperCase()}`;
@@ -150,19 +147,9 @@ export default function ProductDetailPage() {
   const modifierInNaira = selectedVariant?.price_modifier || 0;
   const totalNairaAmount = basePriceInNaira + modifierInNaira;
 
-  // Extract plain localized numbers for Paystack billing allocation maps
   const currentMarketConfig = GLOBAL_MARKET_MATRIX[currentLocale] || GLOBAL_MARKET_MATRIX["int"];
   const isTargetNaira = currentMarketConfig.currency === "NGN";
-
-  const rawExchangeRates: Record<string, number> = { 
-    NGN: 1, USD: 0.00073, EUR: 0.00070, GBP: 0.00060, AED: 0.00230, CAD: 0.00085, ZAR: 0.01100 
-  };
-  const currentConversionFactor = rawExchangeRates[currentMarketConfig.currency || "USD"] || 0.00073;
-  const convertedPriceInteger = totalNairaAmount * currentConversionFactor;
-
-  // 🛠️ UNIVERSAL 70+ COUNTRY BILLING MATRIX RULESET:
-  // If the user is on the Nigerian path, bill in NGN. For ALL other international hubs, bill in USD to prevent Paystack crashes!
-  const finalBillingCurrency = isTargetNaira ? "NGN" : "USD";
+  const finalBillingCurrency = "NGN";
 
   // ====================================================================
   // 💳 INTERACTIVE LIVE PAYSTACK CORE GATEWAY CONFIGURATION
@@ -170,7 +157,7 @@ export default function ProductDetailPage() {
   const paystackConfig = {
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "",
     email: "client-checkout@fizac.com",
-    amount: isTargetNaira ? Math.round(totalNairaAmount * 100) : Math.round(convertedPriceInteger * 100),
+    amount: Math.round(totalNairaAmount * 100), 
     currency: finalBillingCurrency,
     reference: `FZ-${Date.now()}`,
     metadata: {
@@ -190,11 +177,12 @@ export default function ProductDetailPage() {
       onSuccess: (reference: any) => {
         if (typeof window !== "undefined") {
           localStorage.removeItem("fizac_luxury_bag");
+          window.dispatchEvent(new Event("storage"));
         }
         router.push(`/${currentLocale}/checkout/success?ref=${reference.reference}`);
       },
       onClose: () => {
-        console.log("Transaction window dismissed by customer close action.");
+        console.log("Transaction window dismissed by customer.");
       }
     });
   };
@@ -205,7 +193,7 @@ export default function ProductDetailPage() {
       name: product.name,
       image: product.images?.[0] || "/placeholder.jpg",
       selected_variant_value: selectedVariant?.variant_value || "100ml",
-      base_price: product.base_price * 0.00073, // Normalizes baseline back to your cart subtotal factor
+      base_price: product.base_price * 0.00073, 
       quantity: 1
     };
 
@@ -224,8 +212,7 @@ export default function ProductDetailPage() {
       }
 
       localStorage.setItem("fizac_luxury_bag", JSON.stringify(cartArray));
-      
-      // Open right-side sliding confirmation panel overlay instantly
+      window.dispatchEvent(new Event("storage"));
       setIsBagModalOpen(true);
 
     } catch (e) {
@@ -269,7 +256,6 @@ export default function ProductDetailPage() {
         <div className="lg:col-span-5 flex flex-col space-y-8 pt-2">
           
           <div className="space-y-3">
-            {/* Elegant Serif Font Branding applied exclusively to your Product Heading Title */}
             <h1 
               style={{ fontFamily: "'Granjon', 'Garamond', serif" }} 
               className="text-[22px] sm:text-[26px] tracking-[0.15em] font-normal uppercase text-neutral-950 leading-tight"
@@ -285,7 +271,6 @@ export default function ProductDetailPage() {
             {product.product_description}
           </p>
 
-          {/* Dynamic Variant values Selection Grid buttons */}
           {variants.length > 0 && (
             <div className="space-y-3">
               <span className="text-[10px] tracking-[0.2em] font-medium text-neutral-400 uppercase block mb-1">Select Size</span>
@@ -352,13 +337,6 @@ export default function ProductDetailPage() {
                 <p className="font-semibold text-neutral-950 pt-2 font-mono">{getLocalizedPrice(totalNairaAmount, currentLocale)}</p>
               </div>
             </div>
-            
-            {/* Elegant luxury presentation notice explaining foreign exchange fallback rules cleanly */}
-            {!isTargetNaira && (
-              <p className="text-[10px] tracking-wide text-neutral-400 italic font-light leading-relaxed pt-2">
-                * Note: Your bag details show {currentMarketConfig.currency} layout pricing. This transaction is processed securely in US Dollars (${Math.round(convertedPriceInteger)}) at the live daily standard conversion exchange rate.
-              </p>
-            )}
           </div>
 
           <div className="space-y-3 pt-6 border-t border-neutral-100">
@@ -381,3 +359,4 @@ export default function ProductDetailPage() {
     </main>
   );
 }
+
