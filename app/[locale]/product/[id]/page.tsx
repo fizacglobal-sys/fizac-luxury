@@ -5,14 +5,39 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { usePaystackPayment } from "react-paystack";
 import { GLOBAL_MARKET_MATRIX } from "../../../../middleware";
-import { supabase } from "../../../../lib/supabase"; 
+
+// ====================================================================
+// 🗃️ HIGH-LUXURY ARCHIVE PORTFOLIO: FRONTEND SINGLE SOURCE OF TRUTH
+// ====================================================================
+const MASTER_FRONTEND_COLLECTION = [
+  {
+    id: "10000000-0000-0000-0000-000000000001", // Links seamlessly with your shelf page layout matrix
+    name: "COLONIA DELUXE",
+    slug: "colonia-deluxe",
+    base_price: 120000, // True 120,000 NGN baseline value
+    images: ["/images/img/Colonia Deluxe.jpg", "/images/img/perfume3.jpg"],
+    product_description: "Designed for the modern connoisseur, COLONIA DELUXE by Fizac Fragrance redefines the classic, sun-drenched freshness of traditional colognes by infusing it with an unapologetic, contemporary depth. It captures the essence of refined luxury—opening with an explosive, invigorating brightness before settling into a rich, magnetic trail that commands attention. Crafted with high-performance projection in mind, this is not a scent that fades into the background, tailored for individuals who demand both timeless elegance and unforgettable presence.",
+    product_details: [
+      "Concentration: Eau de parfum / High Concentration Blend",
+      "Scent Family: Citrus - Aromatic - Woody",
+      "Master Perfumer: Emmanuel Charles",
+      "Made in Nigeria",
+      "Top Notes: Italian Bergamot, Black Currant, Apple, Lemon, Cedar, Lavender",
+      "Heart Notes: Frankincense, Moroccan Jasmine, Juniper Berries, Birch",
+      "Base Notes: Ambergris, Musk, Patchouli, Tonka Bean, Sandalwood, Leather, Vanilla",
+      "Ingredients: Alcohol Denat, Parfum, Pogostemon Cablin Oil, Citrus Aurantium Bergamia Peel Oil, Citrus Limon Peel Oil, Benzyl Benzoate, Coumarin, Limonene, Vanillin, Linalyl Acetate, Linalool, Beta-Caryophyllene, Pinene, Pelargonium Graveolens Flower Oil, Citral, Citronellol, Terpineol, Rose Ketones, Eugenol, Geranyl Acetate, Geraniol, Terpinolene, Santalol, Camphor, Alpha-Terpinene, Rose Flower Oil/Extract, Benzyl Alcohol, Carvone, Farnesol"
+    ],
+    variants: [
+      { id: "v1", variant_value: "100ml", price_modifier: 0 } // Crystal Gold base selection sizing
+    ]
+  }
+];
 
 interface ProductData {
   id: string;
   name: string;
   product_description: string; 
   product_details: string[];    
-  our_commitment: string;       
   images: string[];     
   base_price: number;   
 }
@@ -38,38 +63,37 @@ export default function ProductDetailPage() {
   const [isBagModalOpen, setIsBagModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    async function fetchLuxuryProductData() {
+    async function loadLocalProductData() {
       try {
         setLoading(true);
 
-        const { data: productData, error: productError } = await supabase
-          .from("products")
-          .select("*")
-          .eq("id", productId)
-          .single();
+        // Scan our high-fashion client portfolio list to locate the correct item match safely
+        const matchedItem = MASTER_FRONTEND_COLLECTION.find(
+          (item) => item.id === productId || item.slug === productId
+        );
 
-        if (productError) throw productError;
-        if (productData) setProduct(productData);
-
-        const { data: variantData, error: variantError } = await supabase
-            .from("product_variants")
-            .select("*")
-            .eq("product_id", productId);
-
-        if (variantError) throw variantError;
-        if (variantData) {
-            setVariants(variantData);
-            if (variantData.length > 0) setSelectedVariant(variantData[0]); 
+        if (matchedItem) {
+          setProduct({
+            id: matchedItem.id,
+            name: matchedItem.name,
+            product_description: matchedItem.product_description,
+            product_details: matchedItem.product_details,
+            images: matchedItem.images,
+            base_price: matchedItem.base_price
+          });
+          setVariants(matchedItem.variants);
+          if (matchedItem.variants.length > 0) {
+            setSelectedVariant(matchedItem.variants[0]);
+          }
         }
-
       } catch (err) {
-        console.error("Database sync issue:", err);
+        console.error("Local data lookup pipeline exception:", err);
       } finally {
         setLoading(false);
       }
     }
 
-    if (productId) fetchLuxuryProductData();
+    if (productId) loadLocalProductData();
   }, [productId]);
 
   // COMPLETE GLOBAL MULTI-CURRENCY CONVERSION MATRIX ENGINE 
@@ -122,8 +146,8 @@ export default function ProductDetailPage() {
 
   if (!product) return null;
 
-  const basePriceInNaira = product.base_price / 0.00073;
-  const modifierInNaira = (selectedVariant?.price_modifier || 0) / 0.00073;
+  const basePriceInNaira = product.base_price;
+  const modifierInNaira = selectedVariant?.price_modifier || 0;
   const totalNairaAmount = basePriceInNaira + modifierInNaira;
 
   // Extract plain localized numbers for Paystack billing allocation maps
@@ -181,7 +205,7 @@ export default function ProductDetailPage() {
       name: product.name,
       image: product.images?.[0] || "/placeholder.jpg",
       selected_variant_value: selectedVariant?.variant_value || "100ml",
-      base_price: product.base_price,
+      base_price: product.base_price * 0.00073, // Normalizes baseline back to your cart subtotal factor
       quantity: 1
     };
 
@@ -357,4 +381,3 @@ export default function ProductDetailPage() {
     </main>
   );
 }
- 

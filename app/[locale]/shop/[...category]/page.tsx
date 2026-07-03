@@ -4,7 +4,21 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { GLOBAL_MARKET_MATRIX } from "../../../../middleware";
-import { supabase } from "../../../../lib/supabase"; 
+
+// ====================================================================
+// 📦 HIGH-LUXURY BRAND ARRAY: FRONTEND CORES SINGLE SOURCE OF TRUTH
+// ====================================================================
+const MASTER_FRONTEND_PRODUCTS = [
+  {
+    id: "10000000-0000-0000-0000-000000000001", // Match your product detail route parameter ID
+    name: "COLONIA DELUXE",
+    slug: "colonia-deluxe",
+    base_price: 120000, // True 120,000 NGN baseline currency input integer value
+    images: ["/images/img/Colonia Deluxe.jpg", "/images/img/perfume3.jpg"],
+    pillar: "fragrance",
+    category_slug: "pb-frag-mens" // Matches your exact menu drawer subcategory parameter!
+  }
+];
 
 interface ProductItem {
   id: string;
@@ -18,7 +32,6 @@ export default function CategoryShelfPage() {
   const params = useParams();
   const currentLocale = typeof params?.locale === "string" ? params.locale.toLowerCase() : "ng";
   
-  // Safely cast the dynamic parameter into a string array token
   const categorySegments = Array.isArray(params?.category) 
     ? params.category 
     : typeof params?.category === "string" 
@@ -29,71 +42,41 @@ export default function CategoryShelfPage() {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    async function fetchRelationalBoutiqueInventory() {
+    async function fetchLocalBoutiqueInventory() {
       try {
         setLoading(true);
         
-        // ✅ BULLETPROOF STRIP: Cleanly convert the array to a pure string to isolate the slug value
+        // Cleanly convert the array to a pure string path check
         const pathString = categorySegments.join("/").toLowerCase();
-        
-        // ====================================================================
-        // 🌐 GLOBAL "VIEW ALL" CONTROLLER CATCH ENGINE
-        // ====================================================================
-        // Matches your exact view all slug 'haute-parfumerie' cleanly
+        const lastSegment = categorySegments[categorySegments.length - 1] || "";
+        const activeSlugFilter = lastSegment.toLowerCase();
+
+        // 🌐 GLOBAL "VIEW ALL" CONTROLLER CAROUSEL CATCH ENGINE
         if (pathString.includes("haute-parfumerie") || pathString.includes("pb-frag-view-all")) {
-          const { data: allFragrances, error: fragranceError } = await supabase
-            .from("products")
-            .select("id, name, slug, base_price, images");
-
-          if (fragranceError) throw fragranceError;
-          setProducts(allFragrances || []);
+          const items = MASTER_FRONTEND_PRODUCTS.filter(p => p.pillar === "fragrance");
+          setProducts(items);
           return;
         }
 
-        // Broad fallback catch for your apparel clothing category sections
+        // Broad fallback catch for apparel clothing collections
         if (pathString.includes("ready-to-wear") || pathString.includes("clothing")) {
-          const { data: allFashion, error: fashionError } = await supabase
-            .from("products")
-            .select("id, name, slug, base_price, images");
-
-          if (fashionError) throw fashionError;
-          setProducts(allFashion || []);
+          const items = MASTER_FRONTEND_PRODUCTS.filter(p => p.pillar === "fashion");
+          setProducts(items);
           return;
         }
 
-        // ====================================================================
-        // 📁 STANDARD SUBCATEGORY FILTER (e.g. 'Men's Fragrance')
-        // ====================================================================
-        const activeSlugFilter = categorySegments[categorySegments.length - 1] || "";
-        
+        // 📁 STANDARD TARGETED MENU DRAWER SUBCATEGORY FILTER
         if (activeSlugFilter) {
-          const { data: categoryData, error: categoryError } = await supabase
-            .from("categories")
-            .select("id")
-            .eq("slug", activeSlugFilter.toLowerCase())
-            .single();
-
-          if (!categoryError && categoryData?.id) {
-            const { data: productRecords, error: productError } = await supabase
-              .from("products")
-              .select("id, name, slug, base_price, images")
-              .eq("category_id", categoryData.id);
-
-            if (!productError && productRecords) {
-              setProducts(productRecords);
-              return;
-            }
-          }
+          const items = MASTER_FRONTEND_PRODUCTS.filter(p => p.category_slug === activeSlugFilter);
+          setProducts(items);
+          return;
         }
 
-        // Ultimate safety backup: If everything misses, pull all records so the wall is never empty
-        const { data: backupData } = await supabase
-          .from("products")
-          .select("id, name, slug, base_price, images");
-        setProducts(backupData || []);
+        // Ultimate backup safety layer: If parameters miss, display everything so it's never blank
+        setProducts(MASTER_FRONTEND_PRODUCTS);
 
       } catch (err) {
-        console.error("Database tracking loop error details:", err);
+        console.error("Local storefront compilation exception error details:", err);
         setProducts([]);
       } finally {
         setLoading(false);
@@ -101,9 +84,9 @@ export default function CategoryShelfPage() {
     }
 
     if (categorySegments.length > 0) {
-      fetchRelationalBoutiqueInventory();
+      fetchLocalBoutiqueInventory();
     }
-  }, [params?.category]);
+  }, [categorySegments]);
 
   // COMPLETE GLOBAL MULTI-CURRENCY CONVERSION MATRIX ENGINE 
   const getLocalizedPrice = (amountInNaira: number, localeKey: string) => {
@@ -124,7 +107,7 @@ export default function CategoryShelfPage() {
     };
 
     const targetCurrency = market.currency || "USD";
-    const conversionFactor = exchangeRates[targetCurrency] !== undefined ? exchangeRates[targetCurrency] : 0.00063;
+    const conversionFactor = exchangeRates[targetCurrency] !== undefined ? exchangeRates[targetCurrency] : 0.00073;
 
     try {
       return new Intl.NumberFormat(languageFormattingCode, {
@@ -152,7 +135,7 @@ export default function CategoryShelfPage() {
   if (loading) {
     return (
       <div className="w-full min-h-screen bg-white flex items-center justify-center">
-        <span className="text-[11px] tracking-[0.3em] text-neutral-400 uppercase animate-pulse">Sifting House Archive...</span>
+        <span className="text-[11px] tracking-[0.3em] uppercase text-neutral-400 animate-pulse">Sifting House Archive...</span>
       </div>
     );
   }
@@ -180,10 +163,11 @@ export default function CategoryShelfPage() {
           /* DYNAMIC MULTI-COLUMN RESPONSIVE COVERS DISPLAY GRID */
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
             {products.map((item) => {
-              const calculatedNairaAmount = item.base_price / 0.00073;
+              // Align with the multi-currency multiplier
+              const calculatedNairaAmount = item.base_price;
 
               return (
-                <Link key={item.id} href={`/${currentLocale}/product/${item.slug}`} className="group flex flex-col cursor-pointer select-none">
+                <Link key={item.id} href={`/${currentLocale}/product/${item.id}`} className="group flex flex-col cursor-pointer select-none">
                   <div className="w-full aspect-[3/4] bg-neutral-50 overflow-hidden mb-4 border border-neutral-100/60">
                     <img 
                       src={item.images?.[0] || "/images/img/placeholder.jpg"} 
