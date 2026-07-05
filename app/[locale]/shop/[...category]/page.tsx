@@ -10,13 +10,22 @@ import { GLOBAL_MARKET_MATRIX } from "../../../../middleware";
 // ====================================================================
 const MASTER_FRONTEND_PRODUCTS = [
   {
-    id: "10000000-0000-0000-0000-000000000001", // Match your product detail route parameter ID
+    id: "10000000-0000-0000-0000-000000000001",
     name: "COLONIA DELUXE",
     slug: "colonia-deluxe",
-    base_price: 120000, // True 120,000 NGN baseline currency input integer value
+    base_price: 120000, 
     images: ["/images/img/Colonia Deluxe.jpg", "/images/img/perfume3.jpg"],
     pillar: "fragrance",
-    category_slug: "pb-frag-mens" // Matches your exact menu drawer subcategory parameter!
+    category_slug: "pb-frag-mens" 
+  },
+  {
+    id: "10000000-0000-0000-0000-000000000002",
+    name: "ELIXIR OF GODS",
+    slug: "elixir-of-gods",
+    base_price: 120000, // Updated perfectly to 120,000 NGN
+    images: ["/images/img/perfume2.jpg", "/images/img/perfume4.jpg"],
+    pillar: "fragrance",
+    category_slug: "pb-frag-mens"
   }
 ];
 

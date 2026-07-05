@@ -30,6 +30,28 @@ const MASTER_FRONTEND_COLLECTION = [
     variants: [
       { id: "v1", variant_value: "100ml", price_modifier: 0 }
     ]
+  },
+  // 🌟 UPDATED: ELIXIR OF GODS DETAILED LUXURY BLUEPRINT ARCHIVE
+  {
+    id: "10000000-0000-0000-0000-000000000002",
+    name: "ELIXIR OF GODS",
+    slug: "elixir-of-gods",
+    base_price: 120000, 
+    images: ["/images/img/perfume2.jpg", "/images/img/perfume4.jpg"],
+    product_description: "Experience the Ultimate Blend of Power, Elegance, and Mystery. Elixir Of Gods is a masterful symphony of contrast. It bridges the gap between raw, rugged masculinity and refined, aristocratic luxury. Bold yet smooth. Rugged yet perfectly tailored. This fragrance is for the modern man who is confident, complex, and unforgettably distinct.",
+    product_details: [
+      "Concentration: Extrait de Parfum Blend",
+      "Scent Family: Amber - Oriental - Woody",
+      "Master Perfumer: Emmanuel Charles",
+      "Made in Nigeria",
+      "Top Notes: Lavender, Calabrian Bergamot, Cardamom, Pink Pepper, Sichuan Pepper, Italian Orange, Brazilian Rosewood (Crisp, fresh, aromatic, and zesty with a pop of exotic spice.)",
+      "Heart Notes: Tuscan Iris, Ambrette (Musk), Pear, Geranium, Leather, Rose, Agarwood (Oud), Sandalwood (Powdery, floral, and undeniably dark, anchored by creamy and exotic woods.)",
+      "Base Notes: Virginia Cedar, Vetiver, Ambroxan, Labdanum, Vanilla, Tonka Bean, Amber (Sensual, warm, slightly smoky, and long-lasting with a rich, resinous trail.)",
+      "Ingredients: Alcohol Denat, Parfum, Citrus Aurantium Bergamia Peel Oil, Aqua, Tetramethyl Acetyloctahydronaphthalenes, Pogostemon Cablin Oil, Linalool, Limonene, Vanillin, Citrus Limon Peel Oil, Linalyl Acetate, Coumarin, Pinene, Eugenia Caryophyllus Oil, Eugenol, Hydroxycitronellal, Beta-Caryophyllene, Cinnamal, Rose Ketones, Eugenyl Acetate, Terpineol, Isoeugenyl Acetate, Geranyl Acetate, Citral, Geraniol, Citrus Aurantium Peel Oil, Anethole, Terpinolene, Menthol, Anise Alcohol, Benzaldehyde, Citronellol, Alpha-Terpinene, Camphor."
+    ],
+    variants: [
+      { id: "v2", variant_value: "100ml", price_modifier: 0 }
+    ]
   }
 ];
 
