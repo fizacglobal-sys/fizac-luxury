@@ -22,10 +22,21 @@ const MASTER_FRONTEND_PRODUCTS = [
     id: "10000000-0000-0000-0000-000000000002",
     name: "ELIXIR OF GODS",
     slug: "elixir-of-gods",
-    base_price: 120000, // Updated perfectly to 120,000 NGN
+    base_price: 120000, 
     images: ["/images/img/perfume2.jpg", "/images/img/perfume4.jpg"],
     pillar: "fragrance",
     category_slug: "pb-frag-mens"
+  },
+  // 🌟 ADDED: THE OBSIDIAN MOCHA OVERCOAT READY-TO-WEAR CARD
+  {
+    id: "20000000-0000-0000-0000-000000000001", // Distinct ID grouping for your fashion collections
+    name: "THE OBSIDIAN MOCHA OVERCOAT",
+    slug: "obsidian-mocha-overcoat",
+    base_price: 155000, // True 155,000 NGN value integer input
+    images: ["/images/img/Brown overcoat 1.jpg", "/images/img/Brown overcoat 2.jpg"],
+    pillar: "fashion",
+    // 📁 This links it perfectly to your Jackets & Coats view clicks
+    category_slug: "men-jackets-coats" 
   }
 ];
 

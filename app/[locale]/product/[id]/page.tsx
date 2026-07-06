@@ -16,41 +16,59 @@ const MASTER_FRONTEND_COLLECTION = [
     slug: "colonia-deluxe",
     base_price: 120000, 
     images: ["/images/img/Colonia Deluxe.jpg", "/images/img/perfume3.jpg"],
-    product_description: "Designed for the modern connoisseur, COLONIA DELUXE by Fizac Fragrance redefines the classic, sun-drenched freshness of traditional colognes by infusing it with an unapologetic, contemporary depth. It captures the essence of refined luxury—opening with an explosive, invigorating brightness before settling into a rich, magnetic trail that commands attention. Crafted with high-performance projection in mind, this is not a scent that fades into the background, tailored for individuals who demand both timeless elegance and unforgettable presence.",
+    product_description: "Designed for the modern connoisseur, COLONIA DELUXE by Fizac Fragrance redefines the classic, sun-drenched freshness of traditional colognes by infusing it with an unapologetic, contemporary depth...",
     product_details: [
       "Concentration: Eau de parfum / High Concentration Blend",
-      "Scent Family: Citrus - Aromatic - Woody",
-      "Master Perfumer: Emmanuel Charles",
-      "Made in Nigeria",
-      "Top Notes: Italian Bergamot, Black Currant, Apple, Lemon, Cedar, Lavender",
-      "Heart Notes: Frankincense, Moroccan Jasmine, Juniper Berries, Birch",
-      "Base Notes: Ambergris, Musk, Patchouli, Tonka Bean, Sandalwood, Leather, Vanilla",
-      "Ingredients: Alcohol Denat, Parfum, Pogostemon Cablin Oil, Citrus Aurantium Bergamia Peel Oil, Citrus Limon Peel Oil, Benzyl Benzoate, Coumarin, Limonene, Vanillin, Linalyl Acetate, Linalool, Beta-Caryophyllene, Pinene, Pelargonium Graveolens Flower Oil, Citral, Citronellol, Terpineol, Rose Ketones, Eugenol, Geranyl Acetate, Geraniol, Terpinolene, Santalol, Camphor, Alpha-Terpinene, Rose Flower Oil/Extract, Benzyl Alcohol, Carvone, Farnesol"
+      "Scent Family: Citrus - Aromatic - Woody"
     ],
-    variants: [
-      { id: "v1", variant_value: "100ml", price_modifier: 0 }
-    ]
+    variants: [{ id: "v1", variant_value: "100ml", price_modifier: 0 }]
   },
-  // 🌟 UPDATED: ELIXIR OF GODS DETAILED LUXURY BLUEPRINT ARCHIVE
   {
     id: "10000000-0000-0000-0000-000000000002",
     name: "ELIXIR OF GODS",
     slug: "elixir-of-gods",
     base_price: 120000, 
     images: ["/images/img/perfume2.jpg", "/images/img/perfume4.jpg"],
-    product_description: "Experience the Ultimate Blend of Power, Elegance, and Mystery. Elixir Of Gods is a masterful symphony of contrast. It bridges the gap between raw, rugged masculinity and refined, aristocratic luxury. Bold yet smooth. Rugged yet perfectly tailored. This fragrance is for the modern man who is confident, complex, and unforgettably distinct.",
+    product_description: "Experience the Ultimate Blend of Power, Elegance, and Mystery. Elixir Of Gods is a masterful symphony of contrast. It bridges the gap between raw, rugged masculinity and refined, aristocratic luxury...",
     product_details: [
       "Concentration: Extrait de Parfum Blend",
-      "Scent Family: Amber - Oriental - Woody",
-      "Master Perfumer: Emmanuel Charles",
-      "Made in Nigeria",
-      "Top Notes: Lavender, Calabrian Bergamot, Cardamom, Pink Pepper, Sichuan Pepper, Italian Orange, Brazilian Rosewood (Crisp, fresh, aromatic, and zesty with a pop of exotic spice.)",
-      "Heart Notes: Tuscan Iris, Ambrette (Musk), Pear, Geranium, Leather, Rose, Agarwood (Oud), Sandalwood (Powdery, floral, and undeniably dark, anchored by creamy and exotic woods.)",
-      "Base Notes: Virginia Cedar, Vetiver, Ambroxan, Labdanum, Vanilla, Tonka Bean, Amber (Sensual, warm, slightly smoky, and long-lasting with a rich, resinous trail.)",
-      "Ingredients: Alcohol Denat, Parfum, Citrus Aurantium Bergamia Peel Oil, Aqua, Tetramethyl Acetyloctahydronaphthalenes, Pogostemon Cablin Oil, Linalool, Limonene, Vanillin, Citrus Limon Peel Oil, Linalyl Acetate, Coumarin, Pinene, Eugenia Caryophyllus Oil, Eugenol, Hydroxycitronellal, Beta-Caryophyllene, Cinnamal, Rose Ketones, Eugenyl Acetate, Terpineol, Isoeugenyl Acetate, Geranyl Acetate, Citral, Geraniol, Citrus Aurantium Peel Oil, Anethole, Terpinolene, Menthol, Anise Alcohol, Benzaldehyde, Citronellol, Alpha-Terpinene, Camphor."
+      "Scent Family: Amber - Oriental - Woody"
     ],
+    variants: [{ id: "v2", variant_value: "100ml", price_modifier: 0 }]
+  },
+  // 🌟 ADDED: THE OBSIDIAN MOCHA OVERCOAT PRODUCT SPECIFICATION DATA 
+  {
+    id: "20000000-0000-0000-0000-000000000001",
+    name: "The Obsidian Mocha Ankle Length Double-Breasted Overcoat",
+    slug: "obsidian-mocha-overcoat",
+    base_price: 155000,
+    images: [
+      "/images/img/Brown overcoat 1.jpg", 
+      "/images/img/Brown overcoat 2.jpg", 
+      "/images/img/Brown overcoat 3.jpg", 
+      "/images/img/Brown overcoat 4.jpg"
+    ],
+    product_description: "A striking, ankle-length double-breasted overcoat crafted from a heavyweight wool blend in a rich mocha colorway. The defining feature is its oversized peak lapels, which showcase a luxurious, deep chocolate contrast velvet upper panel. Featuring structured shoulders, distinct turn-back cuffs, deep side pockets, and a full tonal satin lining, this statement piece offers a dramatic, flowing silhouette that effortlessly bridges classic sartorial tailoring with high-end modern style.",
+    product_details: [
+      "Sartorial Tailoring: Brown Heavy Wool Blend",
+      "Design Accent: Contrast Velvet Peak Lapels",
+      "Pockets: Deep Functional Side Pockets",
+      "Closure: Double-Breasted Front Button Assembly",
+      "Cuffs: Traditional Turned-Back Style",
+      "Fit Matrix: Dramatic Flowing Silhouette / Ankle-Length Cut",
+      "Fabric Composition: 70% Wool, 30% Polyamide",
+      "Interior Lining: 100% Premium Cupro",
+      "Contrast Trim Accent: 100% Rich Cotton Velvet"
+    ],
+    // Renders your comprehensive sizing dropdown grid parameters beautifully inside your purchase sections
     variants: [
-      { id: "v2", variant_value: "100ml", price_modifier: 0 }
+      { id: "s-xs", variant_value: "XS — IT 44 / US 34", price_modifier: 0 },
+      { id: "s-s", variant_value: "S — IT 46 / US 36", price_modifier: 0 },
+      { id: "s-m", variant_value: "M — IT 48 / US 38", price_modifier: 0 },
+      { id: "s-l", variant_value: "L — IT 50 / US 40", price_modifier: 0 },
+      { id: "s-xl", variant_value: "XL — IT 52 / US 42", price_modifier: 0 },
+      { id: "s-xxl", variant_value: "XXL — IT 54 / US 44", price_modifier: 0 },
+      { id: "s-3xl", variant_value: "3XL — IT 56 / US 46", price_modifier: 0 }
     ]
   }
 ];

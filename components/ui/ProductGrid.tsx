@@ -25,7 +25,7 @@ interface ProductGridProps {
 const SAMPLE_COLLECTION: ProductItem[] = [
   { id: "1", name: "Fizac Signature Duffle Bag", category: "TRAVEL & BAGS", priceAmount: 110000, image: "/images/img/product3.jpg", slug: "fizac-signature-duffle-bag" },
   { id: "2", name: "Fizac Boston Clog Suede", category: "SHOES", priceAmount: 87000, image: "/images/img/ADXD6032.jpg", slug: "fizac-boston-clog-suede" },
-  { id: "3", name: "Double-Breasted Overcoat", category: "READY TO WEAR", priceAmount: 155000, image: "/images/img/long overcoat.jpg", slug: "double-breasted-overcoat" },
+  { id: "3", name: "Double-Breasted Overcoat", category: "READY TO WEAR", priceAmount: 155000, image: "/images/img/Brown overcoat 1.jpg", slug: "double-breasted-overcoat" },
   { id: "4", name: "Chelsea Boot", category: "SHOES", priceAmount: 95000, image: "/images/img/Black chelsea boot 2.jpg", slug: "chelsea-boot" },
   { id: "5", name: "Pinstripes White Agbada", category: "TRADITIONAL AFRICAN LUXURY", priceAmount: 185000, image: "/images/img/product5.jpg", slug: "pinstripes-white-agbada" },
   { id: "6", name: "Elixir OF Gods", category: "FRAGRANCE & BEAUTY", priceAmount: 120000, image: "/images/img/perfume2.jpg", slug: "elixir-of-gods" },
