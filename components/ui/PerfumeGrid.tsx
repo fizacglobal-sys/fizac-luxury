@@ -14,10 +14,10 @@ export default function PerfumeGrid({ currentLocale = "ng" }: PerfumeGridProps) 
   
   // CONFIGURATION: Maps your exact public folder filenames, categories, and 120,000 Naira baseline price
   const perfumeItems = [
-    { id: "p1", name: "Colonia Deluxe", category: "Fragrance & Beauty", priceAmount: 120000, image: "/images/img/Colonia Deluxe.jpg", slug: "colonia-deluxe" },
-    { id: "p2", name: "Colonia Deluxe", category: "Fragrance & Beauty", priceAmount: 120000, image: "/images/img/perfume3.jpg", slug: "colonia-deluxe" },
-    { id: "p3", name: "Elixir of Gods", category: "Fragrance & Beauty", priceAmount: 120000, image: "/images/img/perfume2.jpg", slug: "elixir-of-gods" },
-    { id: "p4", name: "Elixir of Gods", category: "Fragrance & Beauty", priceAmount: 120000, image: "/images/img/perfume4.jpg", slug: "elixir-of-gods" },
+    { id: "p1", name: "Colonia Deluxe", category: "FRAGRANCE & BEAUTY", priceAmount: 120000, image: "/images/img/Colonia Deluxe.jpg", slug: "colonia-deluxe" },
+    { id: "p2", name: "Colonia Deluxe", category: "FRAGRANCE & BEAUTY", priceAmount: 120000, image: "/images/img/perfume3.jpg", slug: "colonia-deluxe" },
+    { id: "p3", name: "Elixir of Gods", category: "FRAGRANCE & BEAUTY", priceAmount: 120000, image: "/images/img/perfume2.jpg", slug: "elixir-of-gods" },
+    { id: "p4", name: "Elixir of Gods", category: "FRAGRANCE & BEAUTY", priceAmount: 120000, image: "/images/img/perfume4.jpg", slug: "elixir-of-gods" },
   ];
 
   // Complete Global Multi-Currency Formatting Engine for FIZAC GLOBAL
