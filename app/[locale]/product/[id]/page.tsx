@@ -16,12 +16,20 @@ const MASTER_FRONTEND_COLLECTION = [
     slug: "colonia-deluxe",
     base_price: 120000, 
     images: ["/images/img/Colonia Deluxe.jpg", "/images/img/perfume3.jpg"],
-    product_description: "Designed for the modern connoisseur, COLONIA DELUXE by Fizac Fragrance redefines the classic, sun-drenched freshness of traditional colognes by infusing it with an unapologetic, contemporary depth...",
+    product_description: "Designed for the modern connoisseur, COLONIA DELUXE by Fizac Fragrance redefines the classic, sun-drenched freshness of traditional colognes by infusing it with an unapologetic, contemporary depth. It captures the essence of refined luxury—opening with an explosive, invigorating brightness before settling into a rich, magnetic trail that commands attention. Crafted with high-performance projection in mind, this is not a scent that fades into the background, tailored for individuals who demand both timeless elegance and unforgettable presence.",
     product_details: [
       "Concentration: Eau de parfum / High Concentration Blend",
-      "Scent Family: Citrus - Aromatic - Woody"
+      "Scent Family: Citrus - Aromatic - Woody",
+      "Master Perfumer: Emmanuel Charles",
+      "Made in Nigeria",
+      "Top Notes: Italian Bergamot, Black Currant, Apple, Lemon, Cedar, Lavender",
+      "Heart Notes: Frankincense, Moroccan Jasmine, Juniper Berries, Birch",
+      "Base Notes: Ambergris, Musk, Patchouli, Tonka Bean, Sandalwood, Leather, Vanilla",
+      "Ingredients: Alcohol Denat, Parfum, Pogostemon Cablin Oil, Citrus Aurantium Bergamia Peel Oil, Citrus Limon Peel Oil, Benzyl Benzoate, Coumarin, Limonene, Vanillin, Linalyl Acetate, Linalool, Beta-Caryophyllene, Pinene, Pelargonium Graveolens Flower Oil, Citral, Citronellol, Terpineol, Rose Ketones, Eugenol, Geranyl Acetate, Geraniol, Terpinolene, Santalol, Camphor, Alpha-Terpinene, Rose Flower Oil/Extract, Benzyl Alcohol, Carvone, Farnesol"
     ],
-    variants: [{ id: "v1", variant_value: "100ml", price_modifier: 0 }]
+    variants: [
+      { id: "v1", variant_value: "100ml", price_modifier: 0 }
+    ]
   },
   {
     id: "10000000-0000-0000-0000-000000000002",
@@ -29,14 +37,21 @@ const MASTER_FRONTEND_COLLECTION = [
     slug: "elixir-of-gods",
     base_price: 120000, 
     images: ["/images/img/perfume2.jpg", "/images/img/perfume4.jpg"],
-    product_description: "Experience the Ultimate Blend of Power, Elegance, and Mystery. Elixir Of Gods is a masterful symphony of contrast. It bridges the gap between raw, rugged masculinity and refined, aristocratic luxury...",
+    product_description: "Experience the Ultimate Blend of Power, Elegance, and Mystery. Elixir Of Gods is a masterful symphony of contrast. It bridges the gap between raw, rugged masculinity and refined, aristocratic luxury. Bold yet smooth. Rugged yet perfectly tailored. This fragrance is for the modern man who is confident, complex, and unforgettably distinct.",
     product_details: [
       "Concentration: Extrait de Parfum Blend",
-      "Scent Family: Amber - Oriental - Woody"
+      "Scent Family: Amber - Oriental - Woody",
+      "Master Perfumer: Emmanuel Charles",
+      "Made in Nigeria",
+      "Top Notes: Lavender, Calabrian Bergamot, Cardamom, Pink Pepper, Sichuan Pepper, Italian Orange, Brazilian Rosewood (Crisp, fresh, aromatic, and zesty with a pop of exotic spice.)",
+      "Heart Notes: Tuscan Iris, Ambrette (Musk), Pear, Geranium, Leather, Rose, Agarwood (Oud), Sandalwood (Powdery, floral, and undeniably dark, anchored by creamy and exotic woods.)",
+      "Base Notes: Virginia Cedar, Vetiver, Ambroxan, Labdanum, Vanilla, Tonka Bean, Amber (Sensual, warm, slightly smoky, and long-lasting with a rich, resinous trail.)",
+      "Ingredients: Alcohol Denat, Parfum, Citrus Aurantium Bergamia Peel Oil, Aqua, Tetramethyl Acetyloctahydronaphthalenes, Pogostemon Cablin Oil, Linalool, Limonene, Vanillin, Citrus Limon Peel Oil, Linalyl Acetate, Coumarin, Pinene, Eugenia Caryophyllus Oil, Eugenol, Hydroxycitronellal, Beta-Caryophyllene, Cinnamal, Rose Ketones, Eugenyl Acetate, Terpineol, Isoeugenyl Acetate, Geranyl Acetate, Citral, Geraniol, Citrus Aurantium Peel Oil, Anethole, Terpinolene, Menthol, Anise Alcohol, Benzaldehyde, Citronellol, Alpha-Terpinene, Camphor."
     ],
-    variants: [{ id: "v2", variant_value: "100ml", price_modifier: 0 }]
+    variants: [
+      { id: "v2", variant_value: "100ml", price_modifier: 0 }
+    ]
   },
-  // 🌟 ADDED: THE OBSIDIAN MOCHA OVERCOAT PRODUCT SPECIFICATION DATA 
   {
     id: "20000000-0000-0000-0000-000000000001",
     name: "The Obsidian Mocha Ankle Length Double-Breasted Overcoat",
@@ -60,7 +75,7 @@ const MASTER_FRONTEND_COLLECTION = [
       "Interior Lining: 100% Premium Cupro",
       "Contrast Trim Accent: 100% Rich Cotton Velvet"
     ],
-    // Renders your comprehensive sizing dropdown grid parameters beautifully inside your purchase sections
+    // 🌟 FULLY COMPREHENSIVE UN-TRUNCATED SIZES DETAILED IN FULL:
     variants: [
       { id: "s-xs", variant_value: "XS — IT 44 / US 34", price_modifier: 0 },
       { id: "s-s", variant_value: "S — IT 46 / US 36", price_modifier: 0 },
@@ -69,6 +84,37 @@ const MASTER_FRONTEND_COLLECTION = [
       { id: "s-xl", variant_value: "XL — IT 52 / US 42", price_modifier: 0 },
       { id: "s-xxl", variant_value: "XXL — IT 54 / US 44", price_modifier: 0 },
       { id: "s-3xl", variant_value: "3XL — IT 56 / US 46", price_modifier: 0 }
+    ]
+  },
+  {
+    id: "30000000-0000-0000-0000-000000000001",
+    name: "The Noir Lug-Sole Chelsea Boot",
+    slug: "noir-lug-sole-chelsea-boot",
+    base_price: 95000,
+    images: [
+      "/images/img/Black chelsea boot 2.jpg", 
+      "/images/img/product4.jpg", 
+      "/images/img/Black chelsea boot 1.jpg"
+    ],
+    product_description: "A contemporary twist on a timeless footwear staple, these ankle-high Chelsea boots seamlessly combine rugged utilitarian design with clean, modern minimalism. Crafted with a smooth, premium black leather upper, they feature a distinctive heavy-duty lugged sole that brings an immediate edge to any outfit. Perfect for grounding relaxed denim, cargo pants, or tailored trousers with a bold, structural silhouette.",
+    product_details: [
+      "Footwear Finish: Matte Black Leather Upper",
+      "Design Accent: Classic Elasticated Side Gores",
+      "Heel Fitting: Woven Functional Pull Tab at the Heel",
+      "Toe Profile: Sleek Rounded Silhouette Profile",
+      "Sole Architecture: Chunky Rugged Rubber Lug Sole",
+      "Upper Shell Material: 100% Premium Matte Leather",
+      "Interior Interior Lining: 100% Breathable Microfiber / Leather Blend",
+      "Outsole Foundation Matrix: 100% Durable TPU Rubber Compound"
+    ],
+    variants: [
+      { id: "f-40", variant_value: "EU 40 — UK 6 / US 7", price_modifier: 0 },
+      { id: "f-41", variant_value: "EU 41 — UK 7 / US 8", price_modifier: 0 },
+      { id: "f-42", variant_value: "EU 42 — UK 8 / US 9", price_modifier: 0 },
+      { id: "f-43", variant_value: "EU 43 — UK 9 / US 10", price_modifier: 0 },
+      { id: "f-44", variant_value: "EU 44 — UK 10 / US 11", price_modifier: 0 },
+      { id: "f-45", variant_value: "EU 45 — UK 11 / US 12", price_modifier: 0 },
+      { id: "f-46", variant_value: "EU 46 — UK 12 / US 13", price_modifier: 0 }
     ]
   }
 ];

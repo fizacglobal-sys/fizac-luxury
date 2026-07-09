@@ -27,16 +27,24 @@ const MASTER_FRONTEND_PRODUCTS = [
     pillar: "fragrance",
     category_slug: "pb-frag-mens"
   },
-  // 🌟 ADDED: THE OBSIDIAN MOCHA OVERCOAT READY-TO-WEAR CARD
   {
-    id: "20000000-0000-0000-0000-000000000001", // Distinct ID grouping for your fashion collections
+    id: "20000000-0000-0000-0000-000000000001",
     name: "THE OBSIDIAN MOCHA OVERCOAT",
     slug: "obsidian-mocha-overcoat",
-    base_price: 155000, // True 155,000 NGN value integer input
+    base_price: 155000, 
     images: ["/images/img/Brown overcoat 1.jpg", "/images/img/Brown overcoat 2.jpg"],
     pillar: "fashion",
-    // 📁 This links it perfectly to your Jackets & Coats view clicks
     category_slug: "men-jackets-coats" 
+  },
+  // 🌟 ADDED: THE NOIR LUG-SOLE CHELSEA BOOT APPAREL CARD
+  {
+    id: "30000000-0000-0000-0000-000000000001", 
+    name: "THE NOIR LUG-SOLE CHELSEA BOOT",
+    slug: "noir-lug-sole-chelsea-boot",
+    base_price: 95000, // True 95,000 NGN value integer input
+    images: ["/images/img/Black chelsea boot 2.jpg", "/images/img/product4.jpg"],
+    pillar: "fashion",
+    category_slug: "men-shoes" // Links perfectly to your Shoes menu links view clicks
   }
 ];
 
