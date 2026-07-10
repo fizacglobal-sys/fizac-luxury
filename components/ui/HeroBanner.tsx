@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation"; // Added to dynamically handle localized routes
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -22,6 +23,10 @@ interface BannerData {
 export default function HeroBanner() {
   const [banner, setBanner] = useState<BannerData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const params = useParams(); // Hook to get active country directory slug
+
+  // Build the dynamic locale prefix safely
+  const currentLocale = typeof params?.locale === "string" ? params.locale.toLowerCase() : "ng";
 
   useEffect(() => {
     async function fetchActiveBanner() {
@@ -40,7 +45,6 @@ export default function HeroBanner() {
       } catch (err) {
         console.error("Failed to load luxury marketing hero assets:", err);
       } finally {
-        // FIXED: Perfect TypeScript spelling to prevent compilation crashes
         setLoading(false);
       }
     }
@@ -56,7 +60,6 @@ export default function HeroBanner() {
     );
   }
 
-  // Fallback frame to ensure the hero section NEVER disappears if DB fails
   const fallbackData: BannerData = {
     subtitle: "HAUTE PARFUMERIE",
     title: "CULTURING THE SCENT",
@@ -70,11 +73,17 @@ export default function HeroBanner() {
 
   const activeData = banner || fallbackData;
 
-    return (
+  // Dynamic targeting variable to point your clicked hero video straight to view-all perfumes
+  const targetCategoryLink = `/${currentLocale}/shop/haute-parfumerie`;
+
+  return (
     <section className="relative w-full h-[calc(100vh-64px)] bg-neutral-950 overflow-hidden text-white font-sans">
       
-      {/* BACKGROUND DYNAMIC MEDIA COMPARTMENT */}
-      <div className="absolute inset-0 w-full h-full select-none pointer-events-none z-0">
+      {/* BACKGROUND DYNAMIC MEDIA COMPARTMENT (Wrapped in Link and enabled clicks) */}
+      <Link 
+        href={targetCategoryLink} 
+        className="absolute inset-0 w-full h-full block cursor-pointer z-0 group overflow-hidden"
+      >
         {activeData.media_type === "video" ? (
           <video
             autoPlay
@@ -82,7 +91,7 @@ export default function HeroBanner() {
             muted 
             playsInline 
             preload="auto"
-            className="w-full h-full object-cover brightness-[0.70]"
+            className="w-full h-full object-cover brightness-[0.70] transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]"
           >
             <source src={activeData.media_url} type="video/mp4" />
             <img src="https://unsplash.com" className="w-full h-full object-cover" alt="Fallback background" />
@@ -91,47 +100,50 @@ export default function HeroBanner() {
           <img
             src={activeData.media_url}
             alt={activeData.title}
-            className="w-full h-full object-cover object-center brightness-[0.70]"
+            className="w-full h-full object-cover object-center brightness-[0.70] transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]"
           />
         )}
-      </div>
+      </Link>
 
-      {/* OVERLAY INTERACTIVE CONTENT GRID (Shifted down using pb-12 / pb-14) */}
-      <div className="absolute inset-0 flex flex-col justify-end items-center pb-12 px-6 md:pb-14 text-center z-10">
+      {/* OVERLAY INTERACTIVE CONTENT GRID (Ensured z-10 overlays layout elements correctly) */}
+      <div className="absolute inset-0 flex flex-col justify-end items-center pb-12 px-6 md:pb-14 text-center z-10 pointer-events-none">
         
-        {/* Sub-heading Collections Label */}
-        <span className="text-[11px] tracking-[0.45em] font-medium text-neutral-300 uppercase mb-3">
-          {activeData.subtitle}
-        </span>
+        {/* Inner container to restore user pointer clicks strictly onto actual text buttons */}
+        <div className="flex flex-col items-center pointer-events-auto">
+          {/* Sub-heading Collections Label */}
+          <span className="text-[11px] tracking-[0.45em] font-medium text-neutral-300 uppercase mb-3">
+            {activeData.subtitle}
+          </span>
 
-        {/* Cinematic Understated House Typography Heading (Reduced size & weight) */}
-        <h1 className="text-[26px] sm:text-[36px] md:text-[42px] tracking-[0.2em] font-medium text-white uppercase leading-tight max-w-4xl mb-8 drop-shadow-sm">
-          {activeData.title}
-        </h1>
+          {/* Cinematic Understated House Typography Heading */}
+          <h1 className="text-[26px] sm:text-[36px] md:text-[42px] tracking-[0.2em] font-medium text-white uppercase leading-tight max-w-4xl mb-8 drop-shadow-sm">
+            {activeData.title}
+          </h1>
 
-        {/* Action Button Controls Row */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-md">
-          <Link
-            href={activeData.primary_btn_link}
-            className="w-full sm:w-auto px-12 py-3.5 bg-white text-black text-[11px] tracking-[0.25em] font-bold uppercase transition-all duration-300 hover:bg-neutral-100 hover:tracking-[0.28em] text-center"
-          >
-            {activeData.primary_btn_text}
-          </Link>
-          <Link
-            href={activeData.secondary_btn_link}
-            className="w-full sm:w-auto px-12 py-3.5 bg-transparent text-white text-[11px] tracking-[0.25em] font-bold uppercase border border-white/60 transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:tracking-[0.28em] text-center"
-          >
-            {activeData.secondary_btn_text}
-          </Link>
+          {/* Action Button Controls Row */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-md">
+            <Link
+              href={activeData.primary_btn_link}
+              className="w-full sm:w-auto px-12 py-3.5 bg-white text-black text-[11px] tracking-[0.25em] font-bold uppercase transition-all duration-300 hover:bg-neutral-100 hover:tracking-[0.28em] text-center"
+            >
+              {activeData.primary_btn_text}
+            </Link>
+            <Link
+              href={activeData.secondary_btn_link}
+              className="w-full sm:w-auto px-12 py-3.5 bg-transparent text-white text-[11px] tracking-[0.25em] font-bold uppercase border border-white/60 transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:tracking-[0.28em] text-center"
+            >
+              {activeData.secondary_btn_text}
+            </Link>
+          </div>
         </div>
 
       </div>
 
-            {/* Luxury Minimalist Scroll Down Marker */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-neutral-400 select-none hidden md:flex z-10 opacity-70">
+      {/* Luxury Minimalist Scroll Down Marker */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-neutral-400 select-none hidden md:flex z-10 opacity-70 pointer-events-none">
         <div className="w-[1px] h-6 bg-gradient-to-b from-white/60 to-transparent" />
       </div>
 
     </section>
   );
-} // <--- MAKE SURE THIS CLOSING BRACKET IS PRESENT HERE
+}
