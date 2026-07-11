@@ -144,7 +144,11 @@ export default function Header({
       <MenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       {/* 🔍 Global Interactive Full-Screen Luxury Search Overlay Container */}
-      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <SearchOverlay 
+        isOpen={isSearchOpen} 
+        onClose={() => setIsSearchOpen(false)} 
+        currentLocale={currentLocale} 
+      />
     </>
   );
 }
