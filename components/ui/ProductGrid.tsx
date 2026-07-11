@@ -23,7 +23,7 @@ interface ProductGridProps {
 
 // Minimalist collection aligned to your exact specifications without adjustments or scattering
 const SAMPLE_COLLECTION: ProductItem[] = [
-  { id: "1", name: "Fizac Signature Duffle Bag", category: "TRAVEL & BAGS", priceAmount: 110000, image: "/images/img/product3.jpg", slug: "fizac-signature-duffle-bag" },
+  { id: "1", name: "The Fizac Signature Duffle Bag", category: "TRAVEL", priceAmount: 110000, image: "/images/img/product13.jpg", slug: "the-fizac-signature-duffle-bag" },
   { id: "2", name: "Fizac Boston Clog Suede", category: "SHOES", priceAmount: 87000, image: "/images/img/ADXD6032.jpg", slug: "fizac-boston-clog-suede" },
   { id: "3", name: "THE OBSIDIAN MOCHA OVERCOAT", category: "MEN", priceAmount: 155000, image: "/images/img/Brown overcoat 1.jpg", slug: "obsidian-mocha-overcoat" },
   { id: "4", name: "The Noir Lug-Sole Chelsea Boot", category: "MEN", priceAmount: 95000, image: "/images/img/Black chelsea boot 2.jpg", slug: "noir-lug-sole-chelsea-boot" },
