@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import MenuDrawer from "./MenuDrawer";
+import SearchOverlay from "./SearchOverlay"; // 🔍 Imported your brand new luxury search component
 
 interface HeaderProps {
   activeCurrency?: string;
@@ -17,6 +18,35 @@ export default function Header({
 }: HeaderProps) {
   // State to manage whether the full-screen luxury menu drawer is open or closed
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  
+  // 🔍 State to toggle the luxury full-screen search view overlay frame
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  
+  const [bagCount, setBagCount] = useState<number>(0);
+
+  // 🌟 LIVE CONFIGURATION BAG COUNTER EVENT LISTENER
+  useEffect(() => {
+    function updateHeaderBagCounter() {
+      if (typeof window !== "undefined") {
+        const existingBag = localStorage.getItem("fizac_luxury_bag");
+        if (existingBag) {
+          const bagArray = JSON.parse(existingBag);
+          // Accumulate the total quantity of items inside the array list
+          const totalUnitsSum = bagArray.reduce((sum: number, item: any) => sum + (item.quantity || 1), 0);
+          setBagCount(totalUnitsSum);
+        } else {
+          setBagCount(0);
+        }
+      }
+    }
+
+    // Run calculation once on initial page load
+    updateHeaderBagCounter();
+
+    // Listen for custom item insertion triggers to update layout values instantly on click!
+    window.addEventListener("storage", updateHeaderBagCounter);
+    return () => window.removeEventListener("storage", updateHeaderBagCounter);
+  }, []);
 
   // Custom refresh function to completely restart the home screen experience on logo click
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -44,8 +74,9 @@ export default function Header({
               <span className="hidden md:inline">MENU</span>
             </button>
 
+            {/* 🔍 SEARCH TRIGGER BUTTON: Now opens the full screen luxury search layout on click */}
             <button 
-              onClick={() => console.log("Search")}
+              onClick={() => setIsSearchOpen(true)}
               className="flex items-center space-x-1.5 sm:space-x-2 text-[10px] sm:text-[11px] tracking-[0.15em] text-neutral-800 font-normal hover:opacity-60 transition-opacity cursor-pointer uppercase"
             >
               <svg className="w-4 h-4 stroke-[1.25]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,12 +125,14 @@ export default function Header({
               </svg>
             </Link>
 
+            {/* 🛍️ Dynamic Shopping Bag Link Container */}
             <Link href={`/${currentLocale}/bag`} className="hover:opacity-60 transition-opacity flex items-center" aria-label="Shopping Bag">
               <svg className="w-4 h-4 stroke-[1.25]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" />
               </svg>
+              {/* ✅ DYNAMIC STATE COUNT MARKER */}
               <span style={{ fontSize: "9px" }} className="ml-1 font-medium bg-neutral-950 text-white w-3.5 h-3.5 rounded-full flex items-center justify-center text-center">
-                0
+                {bagCount}
               </span>
             </Link>
           </div>
@@ -107,7 +140,11 @@ export default function Header({
         </div>
       </header>
 
+      {/* 🧭 Lateral Navigation Drawer Panel Overlay */}
       <MenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+
+      {/* 🔍 Global Interactive Full-Screen Luxury Search Overlay Container */}
+      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
   );
 }
