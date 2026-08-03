@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+/* Leave the rest of your custom selection and scroll codes exactly as they are below this */
+
+@layer base {
+  html {
+    /* Guarantees smooth scrolling when users navigate across fashion edits */
+    scroll-behavior: smooth;
+    background-color: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+  }
+
+  /* Custom minimal selection tokens for a premium user experience */
+  ::selection {
+    background-color: #262626; /* neutral-800 */
+    color: #ffffff;
+  }
+}
+
+/* Structural utility to hide scrollbars during cinematic campaign videos if needed */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
