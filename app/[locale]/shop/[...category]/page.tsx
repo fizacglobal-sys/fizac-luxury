@@ -53,10 +53,11 @@ interface ProductItem {
   id: string;
   name: string;
   slug: string;
-  base_price: number; 
+  base_price: number;
   images: string[];
+  category_slug: string | string[];
+  pillar: string;
 }
-
 export default function CategoryShelfPage() {
   const params = useParams();
   const currentLocale = typeof params?.locale === "string" ? params.locale.toLowerCase() : "ng";
@@ -96,7 +97,14 @@ export default function CategoryShelfPage() {
 
         // 📁 STANDARD TARGETED MENU DRAWER SUBCATEGORY FILTER
         if (activeSlugFilter) {
-          const items = MASTER_FRONTEND_PRODUCTS.filter(p => p.category_slug === activeSlugFilter);
+          const items = MASTER_FRONTEND_PRODUCTS.filter((p) => {
+            if (Array.isArray(p.category_slug)) {
+              return p.category_slug.includes(activeSlugFilter);
+            }
+
+            return p.category_slug === activeSlugFilter;
+          });
+
           setProducts(items);
           return;
         }
