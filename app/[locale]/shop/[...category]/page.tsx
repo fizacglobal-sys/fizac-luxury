@@ -113,43 +113,41 @@ export default function CategoryShelfPage() {
         const pathString = categorySegments.join("/").toLowerCase();
         const lastSegment = (categorySegments[categorySegments.length - 1] || "").toLowerCase();
 
-        // 🌐 GLOBAL "VIEW ALL" FRAGRANCE CATCH ENGINE
-        if (pathString.includes("haute-parfumerie") || pathString.includes("pb-frag-view-all")) {
-          const items = MASTER_FRONTEND_PRODUCTS.filter(p => p.pillar === "fragrance");
-          setProducts(items);
-          return;
-        }
-
-        // Broad fallback catch for apparel clothing collections
-        if (pathString.includes("ready-to-wear") || pathString.includes("clothing")) {
-          const items = MASTER_FRONTEND_PRODUCTS.filter(p => p.pillar === "fashion");
-          setProducts(items);
-          return;
-        }
-
-        // 📁 TYPE-SAFE MULTI-CATEGORY SUBCATEGORY FILTER
+        // 1. SPECIFIC CATEGORY & SUBCATEGORY FILTER (Priority Execution)
         if (categorySegments.length > 0) {
           const items = MASTER_FRONTEND_PRODUCTS.filter((p) => {
             const productCategories = Array.isArray(p.category_slug) 
-              ? p.category_slug 
-              : [p.category_slug];
+              ? p.category_slug.map((s) => s.toLowerCase())
+              : [p.category_slug.toLowerCase()];
 
-            // Check if any product category slug matches any URL path segment, the last segment, or pathString
             return productCategories.some((slug) => {
-              const lowerSlug = slug.toLowerCase();
               return (
-                lowerSlug === lastSegment ||
-                categorySegments.some((seg) => seg.toLowerCase() === lowerSlug) ||
-                pathString.includes(lowerSlug)
+                slug === lastSegment ||
+                categorySegments.some((seg) => seg.toLowerCase() === slug) ||
+                pathString.includes(slug)
               );
             });
           });
 
-          setProducts(items);
+          // If specific items matched, commit and exit immediately
+          if (items.length > 0) {
+            setProducts(items);
+            return;
+          }
+        }
+
+        // 2. BROAD PILLAR FALLBACKS (Only runs if no specific subcategory matched)
+        if (pathString.includes("haute-parfumerie") || pathString.includes("pb-frag-view-all") || pathString.includes("fragrance")) {
+          setProducts(MASTER_FRONTEND_PRODUCTS.filter((p) => p.pillar === "fragrance"));
           return;
         }
 
-        // Ultimate backup safety layer: If parameters miss, display everything
+        if (pathString.includes("ready-to-wear") || pathString.includes("clothing") || pathString.includes("fashion")) {
+          setProducts(MASTER_FRONTEND_PRODUCTS.filter((p) => p.pillar === "fashion"));
+          return;
+        }
+
+        // 3. ULTIMATE SAFETY BACKUP
         setProducts(MASTER_FRONTEND_PRODUCTS);
 
       } catch (err) {
