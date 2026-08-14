@@ -116,7 +116,32 @@ const MASTER_FRONTEND_COLLECTION = [
       { id: "f-45", variant_value: "EU 45 — UK 11 / US 12", price_modifier: 0 },
       { id: "f-46", variant_value: "EU 46 — UK 12 / US 13", price_modifier: 0 }
     ]
-  }
+  },
+  {
+    id: "30000000-0000-0000-0000-000000000002",
+    name: "The Fizac Signature Duffle Bag",
+    slug: "the-fizac-signature-duffle-bag",
+    base_price: 110000,
+    images: [
+      "/images/img/product13.jpg",
+      "/images/img/product14.jpg",
+      "/images/img/product18.jpg"
+    ],
+    product_description: "Elevate your travel standard with The Fizac Signature Duffle Bag—a masterclass in artisanal leather craft and timeless utility. Designed for the discerning traveler, this weekender duffle is handcrafted from premium full-grain leather featuring a hand-burnished cognac patina that ages uniquely with every journey. Anchored by robust double-rolled leather handles anchored through metal grommets, the bag combines structural durability with refined elegance. A polished signature gold emblem sits at center stage, complemented by heavy-duty dual zippers and reinforced side D-rings for seamless shoulder strap integration. Whether powering through weekend getaways or navigating international carry-on terminals, The Fizac Signature Duffle stands as an understated symbol of luxury, prestige, and functional design.",
+    product_details: [
+      "Material: Hand-finished, burnished full-grain leather with a rich cognac/tan gradient patina",
+      "Hardware: Antique metallic gunmetal grommets, heavy-duty zippers, and a signature gold crest emblem",
+      "Silhouette: Structured cylindrical duffle / weekender holdall",
+      "Carrying Options: Reinforced double-rolled leather handles & side D-rings for detachable strap",
+      "Closure: Smooth dual-runner top zipper extending wide for effortless packing",
+      "Storage: Spacious main compartment with interior zip & slip organization pockets",
+      "Category: Travel / Weekender / Carry-On / Unisex Luxury Leather",
+      "Care Instructions: Store in a dust bag when not in use. Clean gently with a soft cloth and condition periodically with leather balm"
+    ],
+    variants: [
+      { id: "v-one-size", variant_value: "ONE SIZE", price_modifier: 0 }
+    ]
+  },
 ];
 
 interface ProductData {

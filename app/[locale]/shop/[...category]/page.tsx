@@ -46,7 +46,39 @@ const MASTER_FRONTEND_PRODUCTS = [
     pillar: "fashion",
     // 💡 Change this string into an array of all three menu slugs:
     category_slug: ["men-shoes", "men-shoes-view-all", "men-boots-ankle-boots"] 
-  }
+  },
+  {
+    id: "30000000-0000-0000-0000-000000000002",
+    name: "THE FIZAC SIGNATURE DUFFLE BAG",
+    slug: "the-fizac-signature-duffle-bag",
+    base_price: 110000,
+    images: [
+      "/images/img/product13.jpg",
+      "/images/img/product14.jpg",
+      "/images/img/product18.jpg"
+    ],
+    pillar: "fashion",
+    category_slug: [
+      "men-bags-view-all",
+      "men-bags",
+      "men-top-handles-bags",
+      "men-shoulder-bags",
+      "men-crossbody-bags",
+      "men-travel",
+      "men-travel-view-all",
+      "men-travel-bags",
+      "men-luggage-carry-on",
+      "bags",
+      "travel-group-women",
+      "travel-women-view-all",
+      "travel-women-luggage",
+      "travel-women-bags",
+      "travel-group-men",
+      "travel-men-view-all",
+      "travel-men-luggage",
+      "travel-men-bags"
+    ]
+  },
 ];
 
 interface ProductItem {
