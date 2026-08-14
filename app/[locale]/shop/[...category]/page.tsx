@@ -36,7 +36,6 @@ const MASTER_FRONTEND_PRODUCTS = [
     pillar: "fashion",
     category_slug: "men-jackets-coats" 
   },
-  // 🌟 ADDED: THE NOIR LUG-SOLE CHELSEA BOOT APPAREL CARD
   {
     id: "30000000-0000-0000-0000-000000000001", 
     name: "THE NOIR LUG-SOLE CHELSEA BOOT",
@@ -44,7 +43,6 @@ const MASTER_FRONTEND_PRODUCTS = [
     base_price: 95000, 
     images: ["/images/img/Black chelsea boot 2.jpg", "/images/img/product4.jpg"],
     pillar: "fashion",
-    // 💡 Change this string into an array of all three menu slugs:
     category_slug: ["men-shoes", "men-shoes-view-all", "men-boots-ankle-boots"] 
   },
   {
@@ -59,6 +57,10 @@ const MASTER_FRONTEND_PRODUCTS = [
     ],
     pillar: "fashion",
     category_slug: [
+      "bags",
+      "travel",
+      "luggage",
+      "duffle",
       "men-bags-view-all",
       "men-bags",
       "men-top-handles-bags",
@@ -68,7 +70,6 @@ const MASTER_FRONTEND_PRODUCTS = [
       "men-travel-view-all",
       "men-travel-bags",
       "men-luggage-carry-on",
-      "bags",
       "travel-group-women",
       "travel-women-view-all",
       "travel-women-luggage",
@@ -78,7 +79,7 @@ const MASTER_FRONTEND_PRODUCTS = [
       "travel-men-luggage",
       "travel-men-bags"
     ]
-  },
+  }
 ];
 
 interface ProductItem {
@@ -90,6 +91,7 @@ interface ProductItem {
   category_slug: string | string[];
   pillar: string;
 }
+
 export default function CategoryShelfPage() {
   const params = useParams();
   const currentLocale = typeof params?.locale === "string" ? params.locale.toLowerCase() : "ng";
@@ -108,12 +110,10 @@ export default function CategoryShelfPage() {
       try {
         setLoading(true);
         
-        // Cleanly convert the array to a pure string path check
         const pathString = categorySegments.join("/").toLowerCase();
-        const lastSegment = categorySegments[categorySegments.length - 1] || "";
-        const activeSlugFilter = lastSegment.toLowerCase();
+        const lastSegment = (categorySegments[categorySegments.length - 1] || "").toLowerCase();
 
-        // 🌐 GLOBAL "VIEW ALL" CONTROLLER CAROUSEL CATCH ENGINE
+        // 🌐 GLOBAL "VIEW ALL" FRAGRANCE CATCH ENGINE
         if (pathString.includes("haute-parfumerie") || pathString.includes("pb-frag-view-all")) {
           const items = MASTER_FRONTEND_PRODUCTS.filter(p => p.pillar === "fragrance");
           setProducts(items);
@@ -127,21 +127,29 @@ export default function CategoryShelfPage() {
           return;
         }
 
-        // 📁 STANDARD TARGETED MENU DRAWER SUBCATEGORY FILTER
-        if (activeSlugFilter) {
+        // 📁 TYPE-SAFE MULTI-CATEGORY SUBCATEGORY FILTER
+        if (categorySegments.length > 0) {
           const items = MASTER_FRONTEND_PRODUCTS.filter((p) => {
-            if (Array.isArray(p.category_slug)) {
-              return p.category_slug.includes(activeSlugFilter);
-            }
+            const productCategories = Array.isArray(p.category_slug) 
+              ? p.category_slug 
+              : [p.category_slug];
 
-            return p.category_slug === activeSlugFilter;
+            // Check if any product category slug matches any URL path segment, the last segment, or pathString
+            return productCategories.some((slug) => {
+              const lowerSlug = slug.toLowerCase();
+              return (
+                lowerSlug === lastSegment ||
+                categorySegments.some((seg) => seg.toLowerCase() === lowerSlug) ||
+                pathString.includes(lowerSlug)
+              );
+            });
           });
 
           setProducts(items);
           return;
         }
 
-        // Ultimate backup safety layer: If parameters miss, display everything so it's never blank
+        // Ultimate backup safety layer: If parameters miss, display everything
         setProducts(MASTER_FRONTEND_PRODUCTS);
 
       } catch (err) {
@@ -232,7 +240,6 @@ export default function CategoryShelfPage() {
           /* DYNAMIC MULTI-COLUMN RESPONSIVE COVERS DISPLAY GRID */
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
             {products.map((item) => {
-              // Align with the multi-currency multiplier
               const calculatedNairaAmount = item.base_price;
 
               return (
