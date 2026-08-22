@@ -142,6 +142,51 @@ const MASTER_FRONTEND_COLLECTION = [
       { id: "v-one-size", variant_value: "ONE SIZE", price_modifier: 0 }
     ]
   },
+  {
+    id: "30000000-0000-0000-0000-000000000003",
+    name: "FIZAC BOSTON CLOG SUEDE",
+    slug: "fizac-boston-clog-suede",
+    base_price: 87000,
+    pillar: "fashion",
+    category_slug: [
+      "men-shoes",
+      "men-shoes-view-all",
+      "men-sandals-mules",
+      "clogs",
+      "mules",
+      "slippers"
+    ],
+    department_tags: ["Men", "Women", "Unisex"],
+    subcategory_tags: ["Clogs", "Mules", "Slippers"],
+    images: [
+      "/images/img/KIXP0184.jpg",
+      "/images/img/KXOZ1439.JPG",
+      "/images/img/CUXL6501.JPG"
+    ],
+    description: "Step into effortless luxury and supreme comfort with our Shearling-Lined Suede Clogs. A refined take on the iconic closed-toe mule silhouette, this pair is crafted from premium, velvety-soft suede and lined completely with plush, natural shearling fleece. Engineered for transitional weather and elevated lounging, these slip-ons feature an anatomically contoured cork footbed that molds to your natural foot shape over time. A sleek, adjustable leather bridge strap with a vintage pin-buckle allows for a custom fit, while the lightweight, shock-absorbing EVA outsole provides durable traction for both indoor relaxing and outdoor wear. Combining tactile richness with all-day support, they are the ultimate unisex staple for casual sophistication.",
+    details: {
+      design_and_build: [
+        "Upper Material: 100% Genuine Soft Suede Leather.",
+        "Lining & Insole: Plush, temperature-regulating shearling fleece lining.",
+        "Footbed: Ergonomic cork-latex core engineered for custom arch support and heel stability.",
+        "Outsole: Treaded, lightweight EVA (Ethylene Vinyl Acetate) sole for flexible cushioning and grip.",
+        "Closure: Adjustable instep strap with an antique metallic pin buckle."
+      ],
+      fit_and_care: [
+        "Gender / Fit: Unisex styling. (Note: Due to the plush shearling lining, sizing up half or one full size is recommended for optimal comfort).",
+        "Care Instructions: Spot-clean suede uppers with a specialized suede brush and eraser kit. Avoid direct submersion in water to preserve the shearling texture."
+      ]
+    },
+    variants: [
+      { id: "s-xs", variant_value: "XS — IT 44 / US 34", price_modifier: 0 },
+      { id: "s-s", variant_value: "S — IT 46 / US 36", price_modifier: 0 },
+      { id: "s-m", variant_value: "M — IT 48 / US 38", price_modifier: 0 },
+      { id: "s-l", variant_value: "L — IT 50 / US 40", price_modifier: 0 },
+      { id: "s-xl", variant_value: "XL — IT 52 / US 42", price_modifier: 0 },
+      { id: "s-xxl", variant_value: "XXL — IT 54 / US 44", price_modifier: 0 },
+      { id: "s-3xl", variant_value: "3XL — IT 56 / US 46", price_modifier: 0 }
+    ]
+  },
 ];
 
 interface ProductData {

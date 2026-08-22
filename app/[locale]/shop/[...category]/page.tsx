@@ -79,6 +79,26 @@ const MASTER_FRONTEND_PRODUCTS = [
       "travel-men-luggage",
       "travel-men-bags"
     ]
+  },
+  {
+    id: "30000000-0000-0000-0000-000000000003",
+    name: "FIZAC BOSTON CLOG SUEDE",
+    slug: "fizac-boston-clog-suede",
+    base_price: 87000,
+    pillar: "fashion",
+    images: [
+      "/images/img/KIXP0184.jpg",
+      "/images/img/KXOZ1439.JPG",
+      "/images/img/CUXL6501.JPG"
+    ],
+    category_slug: [
+      "men-shoes",
+      "men-shoes-view-all",
+      "men-sandals-mules",
+      "clogs",
+      "mules",
+      "slippers"
+    ]
   }
 ];
 
