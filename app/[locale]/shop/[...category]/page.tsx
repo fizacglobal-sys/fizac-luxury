@@ -87,7 +87,7 @@ const MASTER_FRONTEND_PRODUCTS = [
     base_price: 87000,
     pillar: "fashion",
     images: [
-      "/images/img/KIXP0184.jpg",
+      "/images/img/ADXD6032.jpg",
       "/images/img/KXOZ1439.JPG",
       "/images/img/CUXL6501.JPG"
     ],

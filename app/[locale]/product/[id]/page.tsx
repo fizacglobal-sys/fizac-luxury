@@ -11,12 +11,13 @@ import { GLOBAL_MARKET_MATRIX } from "../../../../middleware";
 // ====================================================================
 const MASTER_FRONTEND_COLLECTION = [
   {
-    id: "10000000-0000-0000-0000-000000000001", 
+    id: "10000000-0000-0000-0000-000000000001",
     name: "COLONIA DELUXE",
     slug: "colonia-deluxe",
-    base_price: 120000, 
+    base_price: 120000,
     images: ["/images/img/Colonia Deluxe.jpg", "/images/img/perfume3.jpg"],
-    product_description: "Designed for the modern connoisseur, COLONIA DELUXE by Fizac Fragrance redefines the classic, sun-drenched freshness of traditional colognes by infusing it with an unapologetic, contemporary depth. It captures the essence of refined luxury—opening with an explosive, invigorating brightness before settling into a rich, magnetic trail that commands attention. Crafted with high-performance projection in mind, this is not a scent that fades into the background, tailored for individuals who demand both timeless elegance and unforgettable presence.",
+    product_description:
+      "Designed for the modern connoisseur, COLONIA DELUXE by Fizac Fragrance redefines the classic, sun-drenched freshness of traditional colognes by infusing it with an unapologetic, contemporary depth. It captures the essence of refined luxury—opening with an explosive, invigorating brightness before settling into a rich, magnetic trail that commands attention. Crafted with high-performance projection in mind, this is not a scent that fades into the background, tailored for individuals who demand both timeless elegance and unforgettable presence.",
     product_details: [
       "Concentration: Eau de parfum / High Concentration Blend",
       "Scent Family: Citrus - Aromatic - Woody",
@@ -27,17 +28,16 @@ const MASTER_FRONTEND_COLLECTION = [
       "Base Notes: Ambergris, Musk, Patchouli, Tonka Bean, Sandalwood, Leather, Vanilla",
       "Ingredients: Alcohol Denat, Parfum, Pogostemon Cablin Oil, Citrus Aurantium Bergamia Peel Oil, Citrus Limon Peel Oil, Benzyl Benzoate, Coumarin, Limonene, Vanillin, Linalyl Acetate, Linalool, Beta-Caryophyllene, Pinene, Pelargonium Graveolens Flower Oil, Citral, Citronellol, Terpineol, Rose Ketones, Eugenol, Geranyl Acetate, Geraniol, Terpinolene, Santalol, Camphor, Alpha-Terpinene, Rose Flower Oil/Extract, Benzyl Alcohol, Carvone, Farnesol"
     ],
-    variants: [
-      { id: "v1", variant_value: "100ml", price_modifier: 0 }
-    ]
+    variants: [{ id: "v1", variant_value: "100ml", price_modifier: 0 }]
   },
   {
     id: "10000000-0000-0000-0000-000000000002",
     name: "ELIXIR OF GODS",
     slug: "elixir-of-gods",
-    base_price: 120000, 
+    base_price: 120000,
     images: ["/images/img/perfume2.jpg", "/images/img/perfume4.jpg"],
-    product_description: "Experience the Ultimate Blend of Power, Elegance, and Mystery. Elixir Of Gods is a masterful symphony of contrast. It bridges the gap between raw, rugged masculinity and refined, aristocratic luxury. Bold yet smooth. Rugged yet perfectly tailored. This fragrance is for the modern man who is confident, complex, and unforgettably distinct.",
+    product_description:
+      "Experience the Ultimate Blend of Power, Elegance, and Mystery. Elixir Of Gods is a masterful symphony of contrast. It bridges the gap between raw, rugged masculinity and refined, aristocratic luxury. Bold yet smooth. Rugged yet perfectly tailored. This fragrance is for the modern man who is confident, complex, and unforgettably distinct.",
     product_details: [
       "Concentration: Extrait de Parfum Blend",
       "Scent Family: Amber - Oriental - Woody",
@@ -48,9 +48,7 @@ const MASTER_FRONTEND_COLLECTION = [
       "Base Notes: Virginia Cedar, Vetiver, Ambroxan, Labdanum, Vanilla, Tonka Bean, Amber (Sensual, warm, slightly smoky, and long-lasting with a rich, resinous trail.)",
       "Ingredients: Alcohol Denat, Parfum, Citrus Aurantium Bergamia Peel Oil, Aqua, Tetramethyl Acetyloctahydronaphthalenes, Pogostemon Cablin Oil, Linalool, Limonene, Vanillin, Citrus Limon Peel Oil, Linalyl Acetate, Coumarin, Pinene, Eugenia Caryophyllus Oil, Eugenol, Hydroxycitronellal, Beta-Caryophyllene, Cinnamal, Rose Ketones, Eugenyl Acetate, Terpineol, Isoeugenyl Acetate, Geranyl Acetate, Citral, Geraniol, Citrus Aurantium Peel Oil, Anethole, Terpinolene, Menthol, Anise Alcohol, Benzaldehyde, Citronellol, Alpha-Terpinene, Camphor."
     ],
-    variants: [
-      { id: "v2", variant_value: "100ml", price_modifier: 0 }
-    ]
+    variants: [{ id: "v2", variant_value: "100ml", price_modifier: 0 }]
   },
   {
     id: "20000000-0000-0000-0000-000000000001",
@@ -58,12 +56,13 @@ const MASTER_FRONTEND_COLLECTION = [
     slug: "obsidian-mocha-overcoat",
     base_price: 155000,
     images: [
-      "/images/img/Brown overcoat 1.jpg", 
-      "/images/img/Brown overcoat 2.jpg", 
-      "/images/img/Brown overcoat 3.jpg", 
+      "/images/img/Brown overcoat 1.jpg",
+      "/images/img/Brown overcoat 2.jpg",
+      "/images/img/Brown overcoat 3.jpg",
       "/images/img/Brown overcoat 4.jpg"
     ],
-    product_description: "A striking, ankle-length double-breasted overcoat crafted from a heavyweight wool blend in a rich mocha colorway. The defining feature is its oversized peak lapels, which showcase a luxurious, deep chocolate contrast velvet upper panel. Featuring structured shoulders, distinct turn-back cuffs, deep side pockets, and a full tonal satin lining, this statement piece offers a dramatic, flowing silhouette that effortlessly bridges classic sartorial tailoring with high-end modern style.",
+    product_description:
+      "A striking, ankle-length double-breasted overcoat crafted from a heavyweight wool blend in a rich mocha colorway. The defining feature is its oversized peak lapels, which showcase a luxurious, deep chocolate contrast velvet upper panel. Featuring structured shoulders, distinct turn-back cuffs, deep side pockets, and a full tonal satin lining, this statement piece offers a dramatic, flowing silhouette that effortlessly bridges classic sartorial tailoring with high-end modern style.",
     product_details: [
       "Sartorial Tailoring: Brown Heavy Wool Blend",
       "Design Accent: Contrast Velvet Peak Lapels",
@@ -75,7 +74,6 @@ const MASTER_FRONTEND_COLLECTION = [
       "Interior Lining: 100% Premium Cupro",
       "Contrast Trim Accent: 100% Rich Cotton Velvet"
     ],
-    // 🌟 FULLY COMPREHENSIVE UN-TRUNCATED SIZES DETAILED IN FULL:
     variants: [
       { id: "s-xs", variant_value: "XS — IT 44 / US 34", price_modifier: 0 },
       { id: "s-s", variant_value: "S — IT 46 / US 36", price_modifier: 0 },
@@ -92,11 +90,12 @@ const MASTER_FRONTEND_COLLECTION = [
     slug: "noir-lug-sole-chelsea-boot",
     base_price: 95000,
     images: [
-      "/images/img/Black chelsea boot 2.jpg", 
-      "/images/img/product4.jpg", 
+      "/images/img/Black chelsea boot 2.jpg",
+      "/images/img/product4.jpg",
       "/images/img/Black chelsea boot 1.jpg"
     ],
-    product_description: "A contemporary twist on a timeless footwear staple, these ankle-high Chelsea boots seamlessly combine rugged utilitarian design with clean, modern minimalism. Crafted with a smooth, premium black leather upper, they feature a distinctive heavy-duty lugged sole that brings an immediate edge to any outfit. Perfect for grounding relaxed denim, cargo pants, or tailored trousers with a bold, structural silhouette.",
+    product_description:
+      "A contemporary twist on a timeless footwear staple, these ankle-high Chelsea boots seamlessly combine rugged utilitarian design with clean, modern minimalism. Crafted with a smooth, premium black leather upper, they feature a distinctive heavy-duty lugged sole that brings an immediate edge to any outfit. Perfect for grounding relaxed denim, cargo pants, or tailored trousers with a bold, structural silhouette.",
     product_details: [
       "Footwear Finish: Matte Black Leather Upper",
       "Design Accent: Classic Elasticated Side Gores",
@@ -127,7 +126,8 @@ const MASTER_FRONTEND_COLLECTION = [
       "/images/img/product14.jpg",
       "/images/img/product18.jpg"
     ],
-    product_description: "Elevate your travel standard with The Fizac Signature Duffle Bag—a masterclass in artisanal leather craft and timeless utility. Designed for the discerning traveler, this weekender duffle is handcrafted from premium full-grain leather featuring a hand-burnished cognac patina that ages uniquely with every journey. Anchored by robust double-rolled leather handles anchored through metal grommets, the bag combines structural durability with refined elegance. A polished signature gold emblem sits at center stage, complemented by heavy-duty dual zippers and reinforced side D-rings for seamless shoulder strap integration. Whether powering through weekend getaways or navigating international carry-on terminals, The Fizac Signature Duffle stands as an understated symbol of luxury, prestige, and functional design.",
+    product_description:
+      "Elevate your travel standard with The Fizac Signature Duffle Bag—a masterclass in artisanal leather craft and timeless utility. Designed for the discerning traveler, this weekender duffle is handcrafted from premium full-grain leather featuring a hand-burnished cognac patina that ages uniquely with every journey. Anchored by robust double-rolled leather handles anchored through metal grommets, the bag combines structural durability with refined elegance. A polished signature gold emblem sits at center stage, complemented by heavy-duty dual zippers and reinforced side D-rings for seamless shoulder strap integration. Whether powering through weekend getaways or navigating international carry-on terminals, The Fizac Signature Duffle stands as an understated symbol of luxury, prestige, and functional design.",
     product_details: [
       "Material: Hand-finished, burnished full-grain leather with a rich cognac/tan gradient patina",
       "Hardware: Antique metallic gunmetal grommets, heavy-duty zippers, and a signature gold crest emblem",
@@ -138,9 +138,7 @@ const MASTER_FRONTEND_COLLECTION = [
       "Category: Travel / Weekender / Carry-On / Unisex Luxury Leather",
       "Care Instructions: Store in a dust bag when not in use. Clean gently with a soft cloth and condition periodically with leather balm"
     ],
-    variants: [
-      { id: "v-one-size", variant_value: "ONE SIZE", price_modifier: 0 }
-    ]
+    variants: [{ id: "v-one-size", variant_value: "ONE SIZE", price_modifier: 0 }]
   },
   {
     id: "30000000-0000-0000-0000-000000000003",
@@ -159,11 +157,12 @@ const MASTER_FRONTEND_COLLECTION = [
     department_tags: ["Men", "Women", "Unisex"],
     subcategory_tags: ["Clogs", "Mules", "Slippers"],
     images: [
-      "/images/img/KIXP0184.jpg",
+      "/images/img/ADXD6032.jpg",
       "/images/img/KXOZ1439.JPG",
       "/images/img/CUXL6501.JPG"
     ],
-    description: "Step into effortless luxury and supreme comfort with our Shearling-Lined Suede Clogs. A refined take on the iconic closed-toe mule silhouette, this pair is crafted from premium, velvety-soft suede and lined completely with plush, natural shearling fleece. Engineered for transitional weather and elevated lounging, these slip-ons feature an anatomically contoured cork footbed that molds to your natural foot shape over time. A sleek, adjustable leather bridge strap with a vintage pin-buckle allows for a custom fit, while the lightweight, shock-absorbing EVA outsole provides durable traction for both indoor relaxing and outdoor wear. Combining tactile richness with all-day support, they are the ultimate unisex staple for casual sophistication.",
+    description:
+      "Step into effortless luxury and supreme comfort with our Shearling-Lined Suede Clogs. A refined take on the iconic closed-toe mule silhouette, this pair is crafted from premium, velvety-soft suede and lined completely with plush, natural shearling fleece. Engineered for transitional weather and elevated lounging, these slip-ons feature an anatomically contoured cork footbed that molds to your natural foot shape over time. A sleek, adjustable leather bridge strap with a vintage pin-buckle allows for a custom fit, while the lightweight, shock-absorbing EVA outsole provides durable traction for both indoor relaxing and outdoor wear. Combining tactile richness with all-day support, they are the ultimate unisex staple for casual sophistication.",
     details: {
       design_and_build: [
         "Upper Material: 100% Genuine Soft Suede Leather.",
@@ -186,21 +185,21 @@ const MASTER_FRONTEND_COLLECTION = [
       { id: "s-xxl", variant_value: "XXL — IT 54 / US 44", price_modifier: 0 },
       { id: "s-3xl", variant_value: "3XL — IT 56 / US 46", price_modifier: 0 }
     ]
-  },
+  }
 ];
 
 interface ProductData {
   id: string;
   name: string;
-  product_description: string; 
-  product_details: string[];    
-  images: string[];     
-  base_price: number;   
+  product_description: string;
+  product_details: string[];
+  images: string[];
+  base_price: number;
 }
 
 interface VariantData {
   id: string;
-  variant_value: string; 
+  variant_value: string;
   price_modifier: number;
 }
 
@@ -227,16 +226,32 @@ export default function ProductDetailPage() {
         );
 
         if (matchedItem) {
+          // Normalizing schema variations across items
+          const descriptionText =
+            matchedItem.product_description || (matchedItem as any).description || "";
+          
+          let detailsArray: string[] = [];
+          if (Array.isArray(matchedItem.product_details)) {
+            detailsArray = matchedItem.product_details;
+          } else if ((matchedItem as any).details) {
+            const rawDetails = (matchedItem as any).details;
+            detailsArray = [
+              ...(rawDetails.design_and_build || []),
+              ...(rawDetails.fit_and_care || [])
+            ];
+          }
+
           setProduct({
             id: matchedItem.id,
             name: matchedItem.name,
-            product_description: matchedItem.product_description,
-            product_details: matchedItem.product_details,
-            images: matchedItem.images,
+            product_description: descriptionText,
+            product_details: detailsArray,
+            images: matchedItem.images || [],
             base_price: matchedItem.base_price
           });
-          setVariants(matchedItem.variants);
-          if (matchedItem.variants.length > 0) {
+
+          setVariants(matchedItem.variants || []);
+          if (matchedItem.variants && matchedItem.variants.length > 0) {
             setSelectedVariant(matchedItem.variants[0]);
           }
         }
@@ -304,7 +319,6 @@ export default function ProductDetailPage() {
   const totalNairaAmount = basePriceInNaira + modifierInNaira;
 
   const currentMarketConfig = GLOBAL_MARKET_MATRIX[currentLocale] || GLOBAL_MARKET_MATRIX["int"];
-  const isTargetNaira = currentMarketConfig.currency === "NGN";
   const finalBillingCurrency = "NGN";
 
   // ====================================================================
@@ -313,7 +327,7 @@ export default function ProductDetailPage() {
   const paystackConfig = {
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "",
     email: "client-checkout@fizac.com",
-    amount: Math.round(totalNairaAmount * 100), 
+    amount: Math.round(totalNairaAmount * 100),
     currency: finalBillingCurrency,
     reference: `FZ-${Date.now()}`,
     metadata: {
@@ -349,7 +363,7 @@ export default function ProductDetailPage() {
       name: product.name,
       image: product.images?.[0] || "/placeholder.jpg",
       selected_variant_value: selectedVariant?.variant_value || "100ml",
-      base_price: product.base_price * 0.00073, 
+      base_price: product.base_price * 0.00073,
       quantity: 1
     };
 
@@ -515,4 +529,3 @@ export default function ProductDetailPage() {
     </main>
   );
 }
-
