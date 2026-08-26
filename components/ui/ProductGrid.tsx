@@ -27,7 +27,7 @@ const SAMPLE_COLLECTION: ProductItem[] = [
   { id: "2", name: "Fizac Boston Clog Suede", category: "SHOES", priceAmount: 87000, image: "/images/img/ADXD6032.jpg", slug: "fizac-boston-clog-suede" },
   { id: "3", name: "THE OBSIDIAN MOCHA OVERCOAT", category: "MEN", priceAmount: 155000, image: "/images/img/Brown overcoat 1.jpg", slug: "obsidian-mocha-overcoat" },
   { id: "4", name: "The Noir Lug-Sole Chelsea Boot", category: "MEN", priceAmount: 95000, image: "/images/img/Black chelsea boot 2.jpg", slug: "noir-lug-sole-chelsea-boot" },
-  { id: "5", name: "Pinstripes White Agbada", category: "TRADITIONAL AFRICAN LUXURY", priceAmount: 185000, image: "/images/img/product5.jpg", slug: "pinstripes-white-agbada" },
+  { id: "5", name: "wHITE PINSTRIPE EMBROIDERED AGBADA SET", category: "MEN", priceAmount: 185000, image: "/images/img/product5.jpg", slug: "white-pinstripe-embroidered-agbada-set" },
   { id: "6", name: "Elixir OF Gods", category: "FRAGRANCE & BEAUTY", priceAmount: 120000, image: "/images/img/perfume2.jpg", slug: "elixir-of-gods" },
   { id: "7", name: "Colonia Deluxe", category: "FRAGRANCE & BEAUTY", priceAmount: 120000, image: "/images/img/perfume3.jpg", slug: "colonia-deluxe" },
   { id: "8", name: "Aso Oke Agbada", category: "TRADITIONAL AFRICAN LUXURY", priceAmount: 145000, image: "/images/img/product6.jpg", slug: "aso-oke-agbada" }

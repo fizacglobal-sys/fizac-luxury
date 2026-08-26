@@ -99,6 +99,26 @@ const MASTER_FRONTEND_PRODUCTS = [
       "mules",
       "slippers"
     ]
+  },
+  {
+    id: "20000000-0000-0000-0000-000000000002",
+    name: "WHITE PINSTRIPE EMBROIDERED AGBADA SET",
+    slug: "white-pinstripe-embroidered-agbada-set",
+    base_price: 185000,
+    pillar: "fashion",
+    category_slug: [
+      "men-dresses",
+      "men-ready-to-wear-view-all",
+      "men-ready-to-wear",
+      "men-new-in",
+      "men-new-in-view-all"
+    ],
+    images: [
+      "/images/img/product5.jpg",
+      "/images/img/CBHA8600.JPG"
+    ],
+    product_description:
+      "Command attention with refined traditional prestige in this classic White Pinstripe Embroidered Agbada Set."
   }
 ];
 
@@ -110,6 +130,7 @@ interface ProductItem {
   images: string[];
   category_slug: string | string[];
   pillar: string;
+  product_description?: string;
 }
 
 export default function CategoryShelfPage() {
@@ -180,6 +201,9 @@ export default function CategoryShelfPage() {
 
     if (categorySegments.length > 0) {
       fetchLocalBoutiqueInventory();
+    } else {
+      setProducts(MASTER_FRONTEND_PRODUCTS);
+      setLoading(false);
     }
   }, [categorySegments]);
 
@@ -230,7 +254,9 @@ export default function CategoryShelfPage() {
   if (loading) {
     return (
       <div className="w-full min-h-screen bg-white flex items-center justify-center">
-        <span className="text-[11px] tracking-[0.3em] uppercase text-neutral-400 animate-pulse">Sifting House Archive...</span>
+        <span className="text-[11px] tracking-[0.3em] uppercase text-neutral-400 animate-pulse">
+          Sifting House Archive...
+        </span>
       </div>
     );
   }
@@ -241,17 +267,23 @@ export default function CategoryShelfPage() {
         
         {/* EDITORIAL SHELF HEADLINE */}
         <div className="flex flex-col items-center text-center mb-16">
-          <span className="text-[9px] tracking-[0.3em] text-neutral-400 font-bold uppercase mb-2">FIZAC SELECTION</span>
+          <span className="text-[9px] tracking-[0.3em] text-neutral-400 font-bold uppercase mb-2">
+            FIZAC SELECTION
+          </span>
           <h1 className="text-[22px] sm:text-[28px] tracking-[0.2em] font-light uppercase text-neutral-950">
             {getPageHeadline()}
           </h1>
           <div className="w-8 h-[1px] bg-neutral-900/20 mt-5" />
-          <span className="text-[10px] tracking-[0.15em] text-neutral-400 uppercase mt-3 font-mono font-medium">{products.length} Items Found</span>
+          <span className="text-[10px] tracking-[0.15em] text-neutral-400 uppercase mt-3 font-mono font-medium">
+            {products.length} Items Found
+          </span>
         </div>
 
         {products.length === 0 ? (
           <div className="w-full py-16 text-center">
-            <p className="text-[12px] tracking-[0.15em] uppercase text-neutral-400 font-light">No creations are currently staged under this selection.</p>
+            <p className="text-[12px] tracking-[0.15em] uppercase text-neutral-400 font-light">
+              No creations are currently staged under this selection.
+            </p>
           </div>
         ) : (
           
@@ -261,17 +293,32 @@ export default function CategoryShelfPage() {
               const calculatedNairaAmount = item.base_price;
 
               return (
-                <Link key={item.id} href={`/${currentLocale}/product/${item.id}`} className="group flex flex-col cursor-pointer select-none">
-                  <div className="w-full aspect-[3/4] bg-neutral-50 overflow-hidden mb-4 border border-neutral-100/60">
+                <Link 
+                  key={item.id} 
+                  href={`/${currentLocale}/product/${item.slug || item.id}`} 
+                  className="group flex flex-col cursor-pointer select-none"
+                >
+                  <div className="w-full aspect-[3/4] bg-neutral-50 overflow-hidden mb-4 border border-neutral-100/60 relative">
                     <img 
                       src={item.images?.[0] || "/images/img/placeholder.jpg"} 
                       alt={item.name} 
                       className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" 
                     />
+                    {item.images?.[1] && (
+                      <img 
+                        src={item.images[1]} 
+                        alt={`${item.name} alternate view`} 
+                        className="w-full h-full object-cover object-center absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100" 
+                      />
+                    )}
                   </div>
                   <div className="px-1 flex flex-col space-y-1.5">
-                    <h3 className="text-[12px] tracking-[0.12em] font-medium text-neutral-800 uppercase line-clamp-1">{item.name}</h3>
-                    <span className="text-[12px] tracking-[0.1em] font-semibold text-neutral-900">{getLocalizedPrice(calculatedNairaAmount, currentLocale)}</span>
+                    <h3 className="text-[12px] tracking-[0.12em] font-medium text-neutral-800 uppercase line-clamp-1">
+                      {item.name}
+                    </h3>
+                    <span className="text-[12px] tracking-[0.1em] font-semibold text-neutral-900 font-mono">
+                      {getLocalizedPrice(calculatedNairaAmount, currentLocale)}
+                    </span>
                   </div>
                 </Link>
               );

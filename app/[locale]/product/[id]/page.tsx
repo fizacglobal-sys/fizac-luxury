@@ -177,13 +177,54 @@ const MASTER_FRONTEND_COLLECTION = [
       ]
     },
     variants: [
-      { id: "s-xs", variant_value: "XS — IT 44 / US 34", price_modifier: 0 },
-      { id: "s-s", variant_value: "S — IT 46 / US 36", price_modifier: 0 },
-      { id: "s-m", variant_value: "M — IT 48 / US 38", price_modifier: 0 },
-      { id: "s-l", variant_value: "L — IT 50 / US 40", price_modifier: 0 },
-      { id: "s-xl", variant_value: "XL — IT 52 / US 42", price_modifier: 0 },
-      { id: "s-xxl", variant_value: "XXL — IT 54 / US 44", price_modifier: 0 },
-      { id: "s-3xl", variant_value: "3XL — IT 56 / US 46", price_modifier: 0 }
+      { id: "clog-39", variant_value: "EU 39 — UK 5.5 / US 6.5", price_modifier: 0 },
+      { id: "clog-40", variant_value: "EU 40 — UK 6 / US 7", price_modifier: 0 },
+      { id: "clog-41", variant_value: "EU 41 — UK 7 / US 8", price_modifier: 0 },
+      { id: "clog-42", variant_value: "EU 42 — UK 8 / US 9", price_modifier: 0 },
+      { id: "clog-43", variant_value: "EU 43 — UK 9 / US 10", price_modifier: 0 },
+      { id: "clog-44", variant_value: "EU 44 — UK 10 / US 11", price_modifier: 0 },
+      { id: "clog-45", variant_value: "EU 45 — UK 11 / US 12", price_modifier: 0 }
+    ]
+  },
+  {
+    id: "20000000-0000-0000-0000-000000000002",
+    name: "WHITE PINSTRIPE EMBROIDERED AGBADA SET",
+    slug: "white-pinstripe-embroidered-agbada-set",
+    base_price: 185000,
+    pillar: "fashion",
+    category_slug: [
+      "men-dresses",
+      "men-ready-to-wear-view-all",
+      "men-ready-to-wear",
+      "men-new-in",
+      "men-new-in-view-all"
+    ],
+    department_tags: ["Men"],
+    subcategory_tags: ["Agbada", "Traditional", "Native Wear"],
+    images: [
+      "/images/img/product5.jpg",
+      "/images/img/CBHA8600.JPG"
+    ],
+    product_description:
+      "Command attention with refined traditional prestige in this classic White Pinstripe Embroidered Agbada Set. Crafted from premium, structured textile with pinstripe detailing, this ensemble offers a contemporary silhouette while honoring rich West African heritage. The centerpiece outer Agbada robe features tone-on-tone geometric chest embroidery in architectural chevron and diamond motifs. Designed as a full 4-piece ceremonial attire, it is paired over an inner short-sleeve kaftan shirt, tailored trousers, and a matching folded Fila cap. Ideal for weddings, high-profile galas, traditional ceremonies, and executive celebrations.",
+    product_details: [
+      "Outer Robe (Agbada): Lightweight pinstriped fabric with a subtle sheen and fluid drape.",
+      "Inner Set (Kaftan & Trouser): Short-sleeve inner tunic with a grandad/band collar and matching tailored trousers.",
+      "Embroidery: High-density, multi-directional geometric threadwork across the central bib panel.",
+      "Headwear: Matching pinstripe Fila (traditional cap) crafted from the same main fabric.",
+      "Colorway: Crisp White with Charcoal/Black Pinstripes & White Embroidery.",
+      "Ensemble Includes: Outer Agbada Robe, Inner Kaftan Shirt, Trousers, and Matching Fila Cap.",
+      "Fit Standard: Traditional Loose Fit Outer Robe / Tailored Inner Set.",
+      "Care Instructions: Dry clean only to preserve threadwork structure and crisp fabric finish."
+    ],
+    variants: [
+      { id: "agb-xs", variant_value: "XS — Chest 44–46\" / Agbada L 48–50\"", price_modifier: 0 },
+      { id: "agb-s", variant_value: "S — Chest 46–48\" / Agbada L 50–52\"", price_modifier: 0 },
+      { id: "agb-m", variant_value: "M — Chest 48–50\" / Agbada L 52–54\"", price_modifier: 0 },
+      { id: "agb-l", variant_value: "L — Chest 50–52\" / Agbada L 54–56\"", price_modifier: 0 },
+      { id: "agb-xl", variant_value: "XL — Chest 52–55\" / Agbada L 56–58\"", price_modifier: 0 },
+      { id: "agb-xxl", variant_value: "XXL — Chest 55–58\" / Agbada L 58–60\"", price_modifier: 0 },
+      { id: "agb-3xl", variant_value: "3XL — Chest 58–62\" / Agbada L 60–62\"", price_modifier: 0 }
     ]
   }
 ];
@@ -333,7 +374,7 @@ export default function ProductDetailPage() {
     metadata: {
       custom_fields: [
         { display_name: "Product Name", variable_name: "product_name", value: product.name },
-        { display_name: "Selected Size", variable_name: "selected_size", value: selectedVariant?.variant_value || "100ml" },
+        { display_name: "Selected Size", variable_name: "selected_size", value: selectedVariant?.variant_value || "ONE SIZE" },
         { display_name: "Original Browsing Currency", variable_name: "display_currency", value: currentMarketConfig.currency }
       ]
     }
@@ -362,7 +403,7 @@ export default function ProductDetailPage() {
       id: product.id,
       name: product.name,
       image: product.images?.[0] || "/placeholder.jpg",
-      selected_variant_value: selectedVariant?.variant_value || "100ml",
+      selected_variant_value: selectedVariant?.variant_value || "ONE SIZE",
       base_price: product.base_price * 0.00073,
       quantity: 1
     };
@@ -444,12 +485,12 @@ export default function ProductDetailPage() {
           {variants.length > 0 && (
             <div className="space-y-3">
               <span className="text-[10px] tracking-[0.2em] font-medium text-neutral-400 uppercase block mb-1">Select Size</span>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {variants.map((v) => (
                   <button
                     key={v.id}
                     onClick={() => setSelectedVariant(v)}
-                    className={`text-[11px] tracking-[0.1em] py-3.5 border text-center font-normal transition-all cursor-pointer uppercase ${
+                    className={`text-[10px] tracking-[0.05em] py-3.5 px-2 border text-center font-normal transition-all cursor-pointer uppercase ${
                       selectedVariant?.id === v.id ? "bg-neutral-950 text-white border-neutral-950 font-medium" : "bg-white text-neutral-800 border-neutral-200 hover:border-black"
                     }`}
                   >
@@ -471,7 +512,7 @@ export default function ProductDetailPage() {
 
           {product.product_details && product.product_details.length > 0 && (
               <div className="border-t border-b border-neutral-100 py-6 space-y-3">
-                  <span className="text-[10px] tracking-[0.2em] font-medium text-neutral-400 uppercase block">Olfactive Signature Matrix</span>
+                  <span className="text-[10px] tracking-[0.2em] font-medium text-neutral-400 uppercase block">Product Specifications & Care</span>
                   <ul className="space-y-3 text-[12px] tracking-[0.06em] font-light text-neutral-600 pl-4 list-disc uppercase">
                       {product.product_details.map((detail, index) => (
                           <li key={index} className="leading-relaxed">{detail}</li>
@@ -502,7 +543,7 @@ export default function ProductDetailPage() {
               </div>
               <div className="flex-1 flex flex-col space-y-1 text-[12px] tracking-wide uppercase">
                 <h3 className="font-medium text-neutral-900">{product.name}</h3>
-                <p className="text-[10px] text-neutral-400 pt-0.5">Option: <span className="font-medium text-neutral-700">{selectedVariant?.variant_value || "100ml"}</span></p>
+                <p className="text-[10px] text-neutral-400 pt-0.5">Option: <span className="font-medium text-neutral-700">{selectedVariant?.variant_value || "ONE SIZE"}</span></p>
                 <p className="text-[10px] text-neutral-400">Quantity: <span className="font-medium text-neutral-700">1</span></p>
                 <p className="font-semibold text-neutral-950 pt-2 font-mono">{getLocalizedPrice(totalNairaAmount, currentLocale)}</p>
               </div>
