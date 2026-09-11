@@ -14,7 +14,7 @@ const MASTER_FRONTEND_COLLECTION = [
     id: "10000000-0000-0000-0000-000000000001",
     name: "COLONIA DELUXE",
     slug: "colonia-deluxe",
-    base_price: 120000,
+    base_price: 72000, // Updated: 40% OFF from 120,000
     images: ["/images/img/Colonia Deluxe.jpg", "/images/img/perfume3.jpg"],
     product_description:
       "Designed for the modern connoisseur, COLONIA DELUXE by Fizac Fragrance redefines the classic, sun-drenched freshness of traditional colognes by infusing it with an unapologetic, contemporary depth. It captures the essence of refined luxury—opening with an explosive, invigorating brightness before settling into a rich, magnetic trail that commands attention. Crafted with high-performance projection in mind, this is not a scent that fades into the background, tailored for individuals who demand both timeless elegance and unforgettable presence.",
@@ -34,7 +34,7 @@ const MASTER_FRONTEND_COLLECTION = [
     id: "10000000-0000-0000-0000-000000000002",
     name: "ELIXIR OF GODS",
     slug: "elixir-of-gods",
-    base_price: 120000,
+    base_price: 72000, // Updated: 40% OFF from 120,000
     images: ["/images/img/perfume2.jpg", "/images/img/perfume4.jpg"],
     product_description:
       "Experience the Ultimate Blend of Power, Elegance, and Mystery. Elixir Of Gods is a masterful symphony of contrast. It bridges the gap between raw, rugged masculinity and refined, aristocratic luxury. Bold yet smooth. Rugged yet perfectly tailored. This fragrance is for the modern man who is confident, complex, and unforgettably distinct.",
