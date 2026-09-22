@@ -30,10 +30,10 @@ export default function Footer({
         {/* ================= COLUMN 1: NEWSLETTER ================= */}
         <div className="lg:col-span-4 space-y-5">
           <h3 className="text-[11px] tracking-[0.25em] font-medium uppercase text-neutral-400">
-            Fizac Newsletter
+            Fizac Global Newsletter
           </h3>
           <p className="text-[12px] tracking-[0.05em] font-light leading-relaxed text-neutral-400 max-w-sm">
-            Sign up to receive announcements on latest seasonal collections, interior design drops, and high-fashion updates from the House.
+            Sign up to receive private invitations to seasonal releases, bespoke haute parfumerie drops, and luxury traditional collections from the House.
           </p>
           <form onSubmit={handleNewsletterSubmit} className="pt-2 max-w-sm">
             <div className="relative flex items-center border-b border-neutral-700 focus-within:border-white transition-colors py-2">
@@ -58,7 +58,7 @@ export default function Footer({
         {/* ================= COLUMN 2: SERVICES ================= */}
         <div className="lg:col-span-2 space-y-4">
           <h3 className="text-[11px] tracking-[0.25em] font-medium uppercase text-neutral-400">
-            Client Services
+            Client Concierge
           </h3>
           <ul className="space-y-2.5 text-[11px] tracking-[0.12em] font-light text-neutral-500 uppercase">
             <li>
@@ -71,7 +71,7 @@ export default function Footer({
               <Link href={`/${currentLocale}/services/personalization`} className="hover:text-white transition-colors">Personalization</Link>
             </li>
             <li>
-              <Link href={`/${currentLocale}/faq`} className="hover:text-white transition-colors">FAQs & Care</Link>
+              <Link href={`/${currentLocale}/faq`} className="hover:text-white transition-colors">Client Care & FAQ</Link>
             </li>
           </ul>
         </div>
@@ -86,13 +86,13 @@ export default function Footer({
               <Link href={`/${currentLocale}/heritage`} className="hover:text-white transition-colors">Our Heritage</Link>
             </li>
             <li>
-              <Link href={`/${currentLocale}/sustainability`} className="hover:text-white transition-colors">Sustainability</Link>
+              <Link href={`/${currentLocale}/sustainability`} className="hover:text-white transition-colors">Craftsmanship</Link>
             </li>
             <li>
               <Link href={`/${currentLocale}/careers`} className="hover:text-white transition-colors">Careers</Link>
             </li>
             <li>
-              <Link href={`/${currentLocale}/stores`} className="hover:text-white transition-colors">Find a Store</Link>
+              <Link href={`/${currentLocale}/stores`} className="hover:text-white transition-colors">Boutique Locations</Link>
             </li>
           </ul>
         </div>
@@ -100,7 +100,7 @@ export default function Footer({
         {/* ================= COLUMN 4: LEGAL ================= */}
         <div className="lg:col-span-2 space-y-4">
           <h3 className="text-[11px] tracking-[0.25em] font-medium uppercase text-neutral-400">
-            Legal Terms
+            Legal & Privacy
           </h3>
           <ul className="space-y-2.5 text-[11px] tracking-[0.12em] font-light text-neutral-500 uppercase">
             <li>
@@ -132,9 +132,9 @@ export default function Footer({
       {/* ================= REFINED DOWNCENTER BRAND SECTION ================= */}
       <div className="max-w-[1600px] mx-auto px-6 md:px-12 pt-12 flex flex-col items-center justify-center space-y-4 text-center">
         
-        {/* 1. TYPOGRAPHIC ACCENT IDENTICAL TO CENTER HEADER */}
-        <span className="text-xl md:text-2xl tracking-[0.4em] font-semibold text-white uppercase block">
-          FIZAC
+        {/* 1. TYPOGRAPHIC BRAND MARK */}
+        <span className="text-xl md:text-2xl tracking-[0.45em] font-semibold text-white uppercase block">
+          FIZAC GLOBAL
         </span>
 
         {/* 2. LEAN MINIMALIST LEGAL CREDIT STRIP */}
