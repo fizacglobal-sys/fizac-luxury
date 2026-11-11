@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import MenuDrawer from "./MenuDrawer";
-import SearchOverlay from "./SearchOverlay"; // 🔍 Imported your brand new luxury search component
+import SearchOverlay from "./SearchOverlay";
+import ContactDrawer from "./ContactDrawer"; // 📞 Imported your luxury concierge drawer
 
 interface HeaderProps {
   activeCurrency?: string;
@@ -21,6 +22,9 @@ export default function Header({
   
   // 🔍 State to toggle the luxury full-screen search view overlay frame
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+
+  // 📞 State to toggle the luxury Contact / Concierge drawer
+  const [isContactOpen, setIsContactOpen] = useState<boolean>(false);
   
   const [bagCount, setBagCount] = useState<number>(0);
 
@@ -56,6 +60,18 @@ export default function Header({
     }
   };
 
+  const handleOpenLiveChat = () => {
+    // If you integrate a chat widget (Tidio, Crisp, etc.), trigger it here
+    console.log("Triggering live chat...");
+  };
+
+  const handleOpenContactForm = () => {
+    // Directs user to the contact form route
+    if (typeof window !== "undefined") {
+      window.location.href = `/${currentLocale}/contact`;
+    }
+  };
+
   return (
     <>
       {/* 🛠️ Main Header Wrapper: Hard-coded font-sans to force Helvetica styling across all sub-elements */}
@@ -74,7 +90,7 @@ export default function Header({
               <span className="hidden md:inline">MENU</span>
             </button>
 
-            {/* 🔍 SEARCH TRIGGER BUTTON: Now opens the full screen luxury search layout on click */}
+            {/* 🔍 SEARCH TRIGGER BUTTON */}
             <button 
               onClick={() => setIsSearchOpen(true)}
               className="flex items-center space-x-1.5 sm:space-x-2 text-[10px] sm:text-[11px] tracking-[0.15em] text-neutral-800 font-normal hover:opacity-60 transition-opacity cursor-pointer uppercase"
@@ -89,7 +105,6 @@ export default function Header({
           {/* ================= CENTER SIDE: GRANJON ROMAN LOGO IDENTITY ================= */}
           <div className="flex flex-col items-center justify-center flex-1 text-center">
             <a href={`/${currentLocale}`} onClick={handleLogoClick} className="flex flex-col items-center group">
-              {/* 🛠️ LOGO FONT OVERWRITE: Forces elegant Granjon/Garamond roman curves with traditional editorial tracking */}
               <span 
                 style={{ fontFamily: "'Granjon', 'Garamond', 'Baskerville', 'Georgia', serif" }} 
                 className="text-lg sm:text-xl md:text-2xl tracking-[0.4em] font-normal text-neutral-950 transition-transform duration-300 group-hover:scale-[1.01]"
@@ -109,9 +124,13 @@ export default function Header({
               <span className="font-mono text-neutral-900 font-medium">{activeCurrency}</span>
             </div>
 
-            <Link href={`/${currentLocale}/contact`} className="hover:opacity-60 transition-opacity hidden lg:inline-block">
+            {/* 📞 CALL US TRIGGER BUTTON: Now opens the luxury slide-out concierge drawer */}
+            <button 
+              onClick={() => setIsContactOpen(true)}
+              className="hover:opacity-60 transition-opacity hidden lg:inline-block cursor-pointer uppercase tracking-[0.15em]"
+            >
               CALL US
-            </Link>
+            </button>
 
             <Link href={`/${currentLocale}/wishlist`} className="hover:opacity-60 transition-opacity flex items-center" aria-label="Wishlist">
               <svg className="w-4 h-4 stroke-[1.25]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -130,7 +149,6 @@ export default function Header({
               <svg className="w-4 h-4 stroke-[1.25]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" />
               </svg>
-              {/* ✅ DYNAMIC STATE COUNT MARKER */}
               <span style={{ fontSize: "9px" }} className="ml-1 font-medium bg-neutral-950 text-white w-3.5 h-3.5 rounded-full flex items-center justify-center text-center">
                 {bagCount}
               </span>
@@ -148,6 +166,14 @@ export default function Header({
         isOpen={isSearchOpen} 
         onClose={() => setIsSearchOpen(false)} 
         currentLocale={currentLocale} 
+      />
+
+      {/* 📞 Concierge Slide-Out Contact Drawer */}
+      <ContactDrawer 
+        isOpen={isContactOpen} 
+        onClose={() => setIsContactOpen(false)} 
+        onOpenLiveChat={handleOpenLiveChat}
+        onOpenContactForm={handleOpenContactForm}
       />
     </>
   );
