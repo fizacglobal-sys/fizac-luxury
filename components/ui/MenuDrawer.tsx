@@ -2,12 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation"; // 👈 ENSURE THIS LINE IS AT THE TOP OF YOUR FILE
-
+import { useParams } from "next/navigation";
 
 interface MenuDrawerProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpenContact?: () => void; // 📞 Connects mobile "Call Us" trigger to ContactDrawer
 }
 
 interface SubSubCategory {
@@ -207,7 +207,7 @@ const NAVIGATION_TREE: Record<string, NavigationTreePillar> = {
         ]
       }
     ]
-  }, // Separating comma balanced correctly here
+  },
   "men": {
     title: "MEN'S SELECTION",
     sections: [
@@ -272,7 +272,7 @@ const NAVIGATION_TREE: Record<string, NavigationTreePillar> = {
           { name: "Evening Shoes", slug: "men-evening-shoes" }
         ]
       },
-            {
+      {
         subCategoryName: "SMALL LEATHER GOODS",
         slug: "men-small-leather-goods",
         subSubCategories: [
@@ -336,7 +336,7 @@ const NAVIGATION_TREE: Record<string, NavigationTreePillar> = {
       }
     ]
   },
-    "bags-dept": {
+  "bags-dept": {
     title: "BAGS SELECTION",
     sections: [
       {
@@ -359,7 +359,7 @@ const NAVIGATION_TREE: Record<string, NavigationTreePillar> = {
       }
     ]
   },
-    "children-dept": {
+  "children-dept": {
     title: "CHILDREN SELECTION",
     sections: [
       {
@@ -415,7 +415,7 @@ const NAVIGATION_TREE: Record<string, NavigationTreePillar> = {
       }
     ]
   },
-    "travel-dept": {
+  "travel-dept": {
     title: "TRAVEL SELECTION",
     sections: [
       {
@@ -440,7 +440,7 @@ const NAVIGATION_TREE: Record<string, NavigationTreePillar> = {
       }
     ]
   },
-    "jewelry-watches-dept": {
+  "jewelry-watches-dept": {
     title: "JEWELRY & WATCHES",
     sections: [
       {
@@ -494,7 +494,7 @@ const NAVIGATION_TREE: Record<string, NavigationTreePillar> = {
       }
     ]
   },
-    "perfumes-dept": {
+  "perfumes-dept": {
     title: "PERFUMES & BEAUTY",
     sections: [
       {
@@ -527,7 +527,7 @@ const NAVIGATION_TREE: Record<string, NavigationTreePillar> = {
       }
     ]
   },
-    "home-lifestyle-dept": {
+  "home-lifestyle-dept": {
     title: "HOME DECOR & LIFESTYLE",
     sections: [
       {
@@ -564,7 +564,7 @@ const NAVIGATION_TREE: Record<string, NavigationTreePillar> = {
       }
     ]
   },
-    "services": {
+  "services": {
     title: "FIZAC SERVICES",
     sections: [
       {
@@ -619,10 +619,12 @@ const SECONDARY_LINKS_LIST = [
   { id: "store-locator", label: "STORE LOCATOR", href: "/stores" }
 ];
 
-export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
+export default function MenuDrawer({ isOpen, onClose, onOpenContact }: MenuDrawerProps) {
   const [activePillar, setActivePillar] = useState<string>("new-arrival");
+  
+  // 📱 MOBILE DRILL-DOWN STATE: Tracks which pillar is currently expanded on mobile view
+  const [mobileSubView, setMobileSubView] = useState<string | null>(null);
 
-  // 🛠️ ADDED: Fetches your dynamic active route subdirectory parameters
   const params = useParams();
   const currentLocale = typeof params?.locale === "string" ? params.locale.toLowerCase() : "ng";
 
@@ -631,6 +633,7 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      setMobileSubView(null); // Reset mobile drill-down when closed
     }
     return () => {
       document.body.style.overflow = "unset";
@@ -641,53 +644,6 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
 
   const currentPillarData = NAVIGATION_TREE[activePillar] || { title: "", sections: [] };
 
-  const renderedProductButtons = TABS_LIST.map((tab) => {
-    const isSelected = activePillar === tab.id;
-    return (
-      <button
-        key={tab.id}
-        onClick={() => setActivePillar(tab.id)}
-        className={`text-[11px] tracking-[0.2em] text-left font-normal whitespace-nowrap transition-all duration-200 hover:text-black ${
-          isSelected ? "text-black font-medium md:translate-x-2" : "text-neutral-400"
-        }`}
-      >
-        {tab.label}
-      </button>
-    );
-  });
-
-
-  // ====================================================================
-  // 🎨 GROTESQUE SANS-SERIF CORE STYLING MATRIX RENDERING LOOPS
-  // ====================================================================
-  const renderedSecondaryLinks = SECONDARY_LINKS_LIST.map((link) => {
-    if (link.href) {
-      return (
-        <Link
-          key={link.id}
-          href={`/${currentLocale}${link.href}`}
-          onClick={onClose}
-          className="text-[11px] tracking-[0.22em] font-normal text-neutral-400 hover:text-black transition-colors block uppercase"
-        >
-          {link.label}
-        </Link>
-      );
-    }
-
-    const isSelected = activePillar === link.id;
-    return (
-      <button
-        key={link.id}
-        onClick={() => setActivePillar(link.id)}
-        className={`text-[11px] tracking-[0.22em] text-left font-normal whitespace-nowrap transition-all duration-200 hover:text-black uppercase cursor-pointer ${
-          isSelected ? "text-black font-medium" : "text-neutral-400"
-        }`}
-      >
-        {link.label}
-      </button>
-    );
-  });
-
   return (
     <div 
       style={{ fontFamily: "'Helvetica Neue', Arial, 'Helvetica', sans-serif" }} 
@@ -697,14 +653,14 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
       <div className="absolute inset-0 bg-black/30 backdrop-blur-xs" onClick={onClose} />
 
       {/* Main Slide-out Panel Frame Box */}
-      <div className="relative w-full max-w-[900px] bg-white h-screen shadow-2xl flex flex-col md:flex-row transition-transform duration-300 text-black overflow-hidden">
+      <div className="relative w-full max-w-[900px] bg-white h-screen shadow-2xl flex flex-col md:flex-row transition-transform duration-300 text-black overflow-hidden ml-auto">
         
+        {/* ================= DESKTOP VIEW (Two-Column Split Drawer) ================= */}
         {/* LEFT COMPARTMENT: Side Navigation Controls Column */}
-        {/* 📱 Mobile Optimization: Changed h-full to h-auto md:h-full so this navigation bar scales gracefully onto small phone viewports */}
-        <div className="w-full md:w-[320px] bg-neutral-50 border-b md:border-b-0 md:border-r border-neutral-200 p-8 pt-24 flex flex-col justify-between overflow-y-auto scrollbar-none h-auto md:h-full">
+        <div className="hidden md:flex w-[320px] bg-neutral-50 border-r border-neutral-200 p-8 pt-24 flex-col justify-between overflow-y-auto">
           
           {/* Section A: Core Luxury Products Nav List */}
-          <div className="flex flex-row md:flex-col space-x-5 md:space-x-0 md:space-y-7 overflow-x-auto md:overflow-x-visible scrollbar-none pb-6 md:pb-0">
+          <div className="flex flex-col space-y-7">
             {TABS_LIST.map((tab) => {
               const isSelected = activePillar === tab.id;
               const hasSubMenus = (NAVIGATION_TREE[tab.id]?.sections?.length ?? 0) > 0;
@@ -713,13 +669,13 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
                 <button
                   key={tab.id}
                   onClick={() => setActivePillar(tab.id)}
-                  className={`text-[12px] tracking-[0.2em] text-left uppercase flex justify-between items-center w-auto md:w-full transition-all duration-200 hover:text-black group cursor-pointer whitespace-nowrap md:whitespace-normal ${
-                    isSelected ? "text-black font-medium md:translate-x-1" : "text-neutral-500 font-normal"
+                  className={`text-[12px] tracking-[0.2em] text-left uppercase flex justify-between items-center w-full transition-all duration-200 hover:text-black group cursor-pointer ${
+                    isSelected ? "text-black font-medium translate-x-1" : "text-neutral-500 font-normal"
                   }`}
                 >
                   <span>{tab.label}</span>
                   {hasSubMenus && (
-                    <span className={`text-[10px] tracking-normal font-normal text-neutral-400 transition-transform md:block hidden group-hover:translate-x-1 ${
+                    <span className={`text-[10px] tracking-normal font-normal text-neutral-400 transition-transform group-hover:translate-x-1 ${
                       isSelected ? "text-black scale-110" : ""
                     }`}>
                       &gt;
@@ -731,7 +687,7 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
           </div>
 
           {/* Section B: Secondary Brand Utility Links Block */}
-          <div className="mt-14 pt-8 border-t border-neutral-200 flex flex-col space-y-6 hidden md:flex">
+          <div className="mt-14 pt-8 border-t border-neutral-200 flex flex-col space-y-6">
             {SECONDARY_LINKS_LIST.map((link) => {
               const isSelected = activePillar === link.id;
 
@@ -770,59 +726,22 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
           </div>
         </div>
 
-        {/* MOBILE FOOTER UTILITY COMPARTMENT */}
-        <div className="w-full bg-neutral-50 p-6 border-t border-neutral-200 flex flex-col space-y-4 md:hidden">
-          {SECONDARY_LINKS_LIST.map((link) => {
-            if (link.href) {
-              return (
-                <Link
-                  key={link.id}
-                  href={`/${currentLocale}${link.href}`}
-                  onClick={onClose}
-                  className="text-[11px] tracking-[0.25em] font-normal text-neutral-500 hover:text-black transition-colors block uppercase"
-                >
-                  {link.label}
-                </Link>
-              );
-            }
-            return (
-              <button
-                key={link.id}
-                onClick={() => {
-                  setActivePillar(link.id);
-                  const el = document.getElementById("right-compartment-view");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }}
-                className={`text-[11px] tracking-[0.25em] text-left uppercase cursor-pointer ${
-                  activePillar === link.id ? "text-black font-medium" : "text-neutral-500 font-normal"
-                }`}
-              >
-                {link.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* RIGHT COMPARTMENT PANEL: Dynamic Grid Rendering Section */}
-        {/* 📱 Mobile Optimization: Changed flex-1 to md:flex-1 and added max-h-[50vh] md:max-h-screen to ensure the contents scroll beautifully inside mobile viewports instead of breaking your outer drawer container elements */}
-        <div id="right-compartment-view" className="w-full md:flex-1 p-8 md:p-14 pt-16 md:pt-24 overflow-y-auto bg-white relative max-h-[50vh] md:max-h-screen">
+        {/* RIGHT COMPARTMENT PANEL (Desktop): Dynamic Grid Rendering Section */}
+        <div id="right-compartment-view" className="hidden md:flex md:flex-1 p-14 pt-24 overflow-y-auto bg-white relative">
           {/* Main Close Interface Button */}
-          <button onClick={onClose} className="absolute top-6 md:top-8 right-6 md:right-8 text-neutral-400 hover:text-black transition-colors p-1 cursor-pointer">
+          <button onClick={onClose} className="absolute top-8 right-8 text-neutral-400 hover:text-black transition-colors p-1 cursor-pointer">
             <svg className="w-6 h-6 stroke-[1.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
 
-          <h2 className="text-[11px] tracking-[0.3em] font-medium text-neutral-400 mb-8 md:mb-10 uppercase border-b border-neutral-100 pb-3">
+          <h2 className="text-[11px] tracking-[0.3em] font-medium text-neutral-400 mb-10 uppercase border-b border-neutral-100 pb-3 w-full">
             {currentPillarData.title}
           </h2>
 
-          {/* 📱 Mobile Optimization: Kept your grid-cols-1 sm:grid-cols-2 matrix layout perfectly intact */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10 md:gap-y-12">
+          <div className="grid grid-cols-2 gap-x-12 gap-y-12 w-full">
             {currentPillarData.sections.map((subCat) => (
-              <div key={subCat.slug} className="flex flex-col space-y-4 md:space-y-5">
-                
-                {/* Level 2 Subcategory Title Block: Clickable Localized Heading */}
+              <div key={subCat.slug} className="flex flex-col space-y-5">
                 <div className="flex justify-between items-center border-b border-neutral-100 pb-2">
                   <Link
                     href={`/${currentLocale}/shop/${subCat.slug}`}
@@ -836,7 +755,6 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
                   </span>
                 </div>
                 
-                {/* Level 3 Sub-subcategories Leaf list nodes */}
                 <ul className="flex flex-col space-y-3.5 pl-1">
                   {subCat.subSubCategories.map((leaf) => (
                     <li key={leaf.slug}>
@@ -853,6 +771,126 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
               </div>
             ))}
           </div>
+        </div>
+
+
+        {/* ================= MOBILE VIEW (Luxury Single-Screen Drill-Down) ================= */}
+        <div className="flex md:hidden flex-col w-full h-full bg-white relative pt-20">
+          
+          {/* Top Mobile Sticky Header with Back Button */}
+          <div className="absolute top-0 left-0 right-0 h-16 px-6 border-b border-neutral-100 flex items-center justify-between bg-white z-10">
+            {mobileSubView ? (
+              <button 
+                onClick={() => setMobileSubView(null)}
+                className="text-[11px] tracking-[0.2em] uppercase font-medium flex items-center gap-1.5 text-neutral-900 cursor-pointer"
+              >
+                <span>&larr;</span> BACK TO MENU
+              </button>
+            ) : (
+              <span className="text-[11px] tracking-[0.25em] uppercase text-neutral-400 font-medium">
+                MENU
+              </span>
+            )}
+            <button onClick={onClose} className="text-xs uppercase tracking-[0.2em] text-neutral-500 cursor-pointer">
+              Close [X]
+            </button>
+          </div>
+
+          {/* Mobile Body Content Area */}
+          <div className="flex-1 overflow-y-auto px-6 py-6">
+            {!mobileSubView ? (
+              // LEVEL 1: Main Mobile Menu List (Pillars + Secondary Links + Call Us)
+              <div className="flex flex-col space-y-6">
+                <div className="space-y-5 pb-6 border-b border-neutral-100">
+                  {TABS_LIST.map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => {
+                        setActivePillar(tab.id);
+                        setMobileSubView(tab.id); // Triggers drill-down view
+                      }}
+                      className="text-[12px] tracking-[0.2em] text-left uppercase font-normal flex justify-between items-center w-full py-1.5 text-neutral-900 cursor-pointer"
+                    >
+                      <span>{tab.label}</span>
+                      <span className="text-neutral-400 text-xs">&gt;</span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Secondary Links & Concierge Trigger */}
+                <div className="space-y-5 pt-1">
+                  {SECONDARY_LINKS_LIST.map((link) => (
+                    link.href ? (
+                      <Link key={link.id} href={`/${currentLocale}${link.href}`} onClick={onClose} className="text-[11px] tracking-[0.22em] uppercase text-neutral-600 block py-1.5">
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <button
+                        key={link.id}
+                        onClick={() => {
+                          setActivePillar(link.id);
+                          setMobileSubView(link.id);
+                        }}
+                        className="text-[11px] tracking-[0.22em] text-left uppercase font-normal flex justify-between items-center w-full py-1.5 text-neutral-600 cursor-pointer"
+                      >
+                        <span>{link.label}</span>
+                        <span className="text-neutral-400 text-xs">&gt;</span>
+                      </button>
+                    )
+                  ))}
+
+                  {/* 📞 Mobile Client Advisor / Call Us Trigger */}
+                  <button
+                    onClick={() => {
+                      onClose();
+                      if (onOpenContact) onOpenContact();
+                    }}
+                    className="text-[11px] tracking-[0.25em] text-left uppercase font-medium text-neutral-950 pt-4 border-t border-neutral-100 flex items-center justify-between w-full cursor-pointer"
+                  >
+                    <span>CLIENT ADVISOR (CALL US)</span>
+                    <span>&gt;</span>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              // LEVEL 2: Subcategory Drill-Down View (Tapping a pillar slides into this)
+              <div className="space-y-8 pb-12">
+                <h3 className="text-[11px] uppercase tracking-[0.3em] text-neutral-400 font-medium border-b border-neutral-100 pb-3">
+                  {currentPillarData.title}
+                </h3>
+                
+                <div className="flex flex-col space-y-8">
+                  {currentPillarData.sections.map((subCat) => (
+                    <div key={subCat.slug} className="flex flex-col space-y-3">
+                      <Link
+                        href={`/${currentLocale}/shop/${subCat.slug}`}
+                        onClick={onClose}
+                        className="text-[12px] uppercase tracking-[0.2em] font-medium text-neutral-900 flex justify-between items-center border-b border-neutral-100 pb-2"
+                      >
+                        <span>{subCat.subCategoryName}</span>
+                        <span className="text-neutral-400 text-xs">&gt;</span>
+                      </Link>
+
+                      <ul className="flex flex-col space-y-3 pl-1">
+                        {subCat.subSubCategories.map((leaf) => (
+                          <li key={leaf.slug}>
+                            <Link
+                              href={`/${currentLocale}/shop/${leaf.slug}`}
+                              onClick={onClose}
+                              className="text-[11px] tracking-[0.18em] text-neutral-600 hover:text-black block py-1 uppercase"
+                            >
+                              {leaf.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
         </div>
 
       </div>
